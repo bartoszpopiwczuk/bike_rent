@@ -1,2 +1,2 @@
 # bike_rent
-Website for bike renting and maintenance.
+Website for managing bike rent and maintenance.
