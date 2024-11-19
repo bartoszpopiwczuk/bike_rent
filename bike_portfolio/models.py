@@ -30,12 +30,12 @@ class Bicycle(models.Model):
         ("aluminium", "Aluminium"),
         ("titanium", "Titanium"),
     ]
-    frame_material = models.CharField(max_length=30, choices=FRAME_MATERIAL)
+    frame_material = models.CharField(max_length=9, choices=FRAME_MATERIAL)
     WHEEL_SIZE_CHOICES = [
-        (24, "24"),
-        (26, "26"),
+        (24.0, "24"),
+        (26.0, "26"),
         (27.5, "27.5"),
-        (29, "29"),
+        (29.0, "29"),
     ]
     wheel_size = models.FloatField(choices=WHEEL_SIZE_CHOICES)
     tire_size_width = models.FloatField()
@@ -45,7 +45,7 @@ class Bicycle(models.Model):
         ("gravel", "Gravel"),
         ("city", "City"),
     ]
-    type = models.CharField(max_length=30)
+    purpose = models.CharField(max_length=30)
     # BICYCLE_CATEGORIES = []
     # category = models.CharField(max_length=30)
     suspension_front = models.BooleanField(default=True)
