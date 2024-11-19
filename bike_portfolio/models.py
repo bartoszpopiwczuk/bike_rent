@@ -39,13 +39,13 @@ class Bicycle(models.Model):
     ]
     wheel_size = models.FloatField(choices=WHEEL_SIZE_CHOICES)
     tire_size_width = models.FloatField()
-    BICYCLE_TYPES = [
+    BICYCLE_PURPOSE_CHOICES = [
         ("mtb", "Mountain"),
         ("road", "Road"),
         ("gravel", "Gravel"),
         ("city", "City"),
     ]
-    purpose = models.CharField(max_length=30)
+    purpose = models.CharField(max_length=30, choices=BICYCLE_PURPOSE_CHOICES)
     # BICYCLE_CATEGORIES = []
     # category = models.CharField(max_length=30)
     suspension_front = models.BooleanField(default=True)
@@ -57,3 +57,6 @@ class Bicycle(models.Model):
     is_electric = models.BooleanField(default=False)
     prize_buy = models.FloatField()
     prize_rent = models.FloatField()
+
+    def __str__(self) -> str:
+        return f"{self.brand} {self.line} {self.model}"
