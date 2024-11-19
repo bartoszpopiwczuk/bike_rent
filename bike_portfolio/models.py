@@ -32,10 +32,10 @@ class Bicycle(models.Model):
     ]
     frame_material = models.CharField(max_length=30, choices=FRAME_MATERIAL)
     WHEEL_SIZE_CHOICES = [
-        ("24", 24),
-        ("26", 26),
-        ("27.5", 27.5),
-        ("29", 29),
+        (24, "24"),
+        (26, "26"),
+        (27.5, "27.5"),
+        (29, "29"),
     ]
     wheel_size = models.FloatField(choices=WHEEL_SIZE_CHOICES)
     tire_size_width = models.FloatField()
@@ -51,5 +51,9 @@ class Bicycle(models.Model):
     suspension_front = models.BooleanField(default=True)
     suspension_back = models.BooleanField(default=True)
     weight = models.FloatField()
+
+    is_available = models.BooleanField(default=True)
+    is_serviceable = models.BooleanField(default=False)
+    is_electric = models.BooleanField(default=False)
     prize_buy = models.FloatField()
     prize_rent = models.FloatField()
