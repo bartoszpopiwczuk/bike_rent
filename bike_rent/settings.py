@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "bike_portfolio.apps.UsersConfig"
     "bike_portfolio.apps.BikePortfolioConfig",
     "django.contrib.admin",
     "django.contrib.auth",
