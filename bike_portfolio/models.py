@@ -58,5 +58,7 @@ class Bicycle(models.Model):
     prize_buy = models.FloatField()
     prize_rent = models.FloatField()
 
+    image_main = models.ImageField(default="default.jpg", upload_to="main_bike_image")
+
     def __str__(self) -> str:
         return f"{self.brand} {self.line} {self.model}"
