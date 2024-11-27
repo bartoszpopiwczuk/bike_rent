@@ -27,8 +27,16 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("bike_portfolio.urls")),
     path("register/", user_views.register, name="user-register"),
-    path("login/", auth_views.LoginView.as_view(), name="user-login"),
-    path("logout/", auth_views.LogoutView.as_view(), name="user-logout"),
+    path(
+        "login/",
+        auth_views.LoginView.as_view(template_name="users/login.html"),
+        name="user-login",
+    ),
+    path(
+        "logout/",
+        auth_views.LogoutView.as_view(template_name="users/logout.html"),
+        name="user-logout",
+    ),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
