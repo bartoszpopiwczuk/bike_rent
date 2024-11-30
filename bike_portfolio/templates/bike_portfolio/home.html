@@ -1,12 +1,12 @@
 {% extends "bike_portfolio/base.html" %}
 {% block content %}
-<section class="text-gray-400 bg-gray-900 body-font">
+<section class="text-gray-400 bg-gray-800 body-font">
     <div class="container px-5 py-24 mx-auto">
         <div class="flex flex-wrap -mx-4 -mt-4 -mb-10 sm:-m-4">
     {% for bike in bike_list %}
-      <div class="p-4 mb-6 md:w-1/3 sm:mb-0">
+      <div class="p-4 mb-6 md:w-1/3 sm:mb-0 border-gray-200 m-2">
         <div class="h-64 overflow-hidden rounded-lg">
-          <img alt="content" class="object-cover object-center w-full h-full" src="{{bike.image_main.url }}">
+          <img alt="content" class="object-contain object-center w-full h-full" src="{{bike.image_main.url }}">
         </div>
         <h2 class="mt-5 text-xl font-medium text-white title-font"> {{ bike.brand }} {{bike.line}} {{ bike.model }}</h2>
         <p class="mt-2 text-base leading-relaxed">
