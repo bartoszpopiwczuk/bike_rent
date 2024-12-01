@@ -8,7 +8,7 @@
         <div class="h-64 overflow-hidden rounded-lg">
           <img alt="content" class="object-contain object-center w-full h-full" src="{{bike.image_main.url }}">
         </div>
-        <h2 class="mt-5 text-xl font-medium text-white title-font"> {{ bike.brand }} {{bike.line}} {{ bike.model }}</h2>
+        <h2 class="mt-5 text-xl font-medium text-white title-font"> <a href="{% url "bike-detail" bike.id %}"> {{ bike.brand }} {{bike.line}} {{ bike.model }}</a></h2>
         <p class="mt-2 text-base leading-relaxed">
             Year: {{ bike.year_production}}<br>
             Frame size: {{ bike.frame_size}}<br>

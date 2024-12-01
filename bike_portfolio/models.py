@@ -3,14 +3,12 @@ import uuid
 
 
 class Bicycle(models.Model):
-    id = models.UUIDField(
-        default=uuid.uuid4, unique=True, primary_key=True, editable=False
-    )
+    id = models.AutoField(primary_key=True, editable=True)
     brand = models.CharField(max_length=30)  # eg Trek
     line = models.CharField(max_length=100)  # eg Slash
     model = models.CharField(max_length=30)  # eg 9.9 or SE
     generation = models.CharField(max_length=30, blank=True, null=True)  # eg gen 6
-    description = models.CharField(max_length=200)
+    description = models.CharField(max_length=1000)
     year_production = models.IntegerField()
     color_primary = models.CharField(max_length=30)
     color_secondary = models.CharField(max_length=30, blank=True, null=True)
@@ -58,7 +56,7 @@ class Bicycle(models.Model):
     prize_buy = models.FloatField()
     prize_rent = models.FloatField()
 
-    image_main = models.ImageField(default="default.png", upload_to="main_bike_image", name="")
+    image_main = models.ImageField(default="default.png", upload_to="main_bike_image")
 
     def __str__(self) -> str:
         return f"{self.brand} {self.line} {self.model}"
