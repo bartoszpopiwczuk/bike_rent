@@ -1,5 +1,4 @@
 from django.db import models
-import uuid
 
 
 class Bicycle(models.Model):
@@ -56,6 +55,7 @@ class Bicycle(models.Model):
     prize_buy = models.FloatField()
     prize_rent = models.FloatField()
 
+    # TODO: autoedit added images
     image_main = models.ImageField(default="default.png", upload_to="main_bike_image")
 
     def __str__(self) -> str:

@@ -1,10 +1,11 @@
 {% extends "bike_portfolio/base.html" %}
 {% block content %}
 <section class="text-gray-400 bg-gray-800 body-font">
-    <div class="container px-5 py-24 mx-auto">
-        <div class="flex flex-wrap -mx-4 -mt-4 -mb-10 sm:-m-4">
+    <div class="container px-auto py-16 mx-auto">
+      <div class="flex flex-wrap -mx-4 -mt-4 -mb-10 sm:-m-4">
     {% for bike in bike_list %}
-      <div class="p-4 mb-6 md:w-1/3 sm:mb-0 border-gray-200 m-2">
+    <div class="p-4 mb-4 md:w-1/3 sm:mb-0 border border-gray-800 hover:border hover:border-gray-900 m-0">
+        <a href="{% url "bike-detail" bike.id %}">
         <div class="h-64 overflow-hidden rounded-lg">
           <img alt="content" class="object-contain object-center w-full h-full" src="{{bike.image_main.url }}">
         </div>
@@ -14,12 +15,12 @@
             Frame size: {{ bike.frame_size}}<br>
             Wheel size: {{ bike.wheel_size}}<br>
         </p>
-        <a class="inline-flex items-center mt-3 text-yellow-400">More
+        <a class="inline-flex items-center mt-3 text-yellow-500"href="{% url "bike-detail" bike.id %}">More
           <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
             <path d="M5 12h14M12 5l7 7-7 7"></path>
           </svg>
         </a>
-      </div>
+        </div>
       {% endfor %}
     </div>
 </section>

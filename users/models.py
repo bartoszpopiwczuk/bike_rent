@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 
 # exentnds User model with additional shipping adress information
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE) #
     phone_number = models.CharField(max_length=13, blank=True, null=True)
     adress_country = models.CharField(max_length=20, blank=True, null=True)
     adress_city = models.CharField(max_length=30, blank=True, null=True)
