@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Bicycle(models.Model):
-    id = models.AutoField(primary_key=True, editable=True)
+    id = models.AutoField(primary_key=True, editable=False, unique=True)
     brand = models.CharField(max_length=30)  # eg Trek
     line = models.CharField(max_length=100)  # eg Slash
     model = models.CharField(max_length=30)  # eg 9.9 or SE
