@@ -12,7 +12,7 @@
           {{ form.as_p }}
         </div>
         <button class="text-white bg-yellow-500 border-0 py-2 px-8 focus:outline-none hover:bg-yellow-600 rounded text-lg ml-auto" type="submit">Log In</button>
-        <p class="text-xs mt-3">Don't have an account? <a href="users/login.html"><strong>Sign In</strong></a></p>
+        <p class="text-xs mt-3">Don't have an account? <a href="{% url "user-register" %}"><strong>Sign In</strong></a></p>
       </form>
     </div>
   </div>

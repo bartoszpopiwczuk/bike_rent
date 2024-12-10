@@ -16,13 +16,12 @@ class CustomUser(AbstractUser):
     username = models.CharField(max_length=255, unique=True, blank=True)
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["first_name", "last_name", "username"]
+    REQUIRED_FIELDS = ["first_name", "last_name"]
 
     def save(self, *args, **kwargs):
-        # Automatically set the username if it's not provided
+        """Automatically set the username if it's not provided"""
         if not self.username:
-            # Use the id after the object is saved for the first time
-            super().save(*args, **kwargs)  # Save to generate an id
+            super().save(*args, **kwargs)
             self.username = f"user{self.id}"
         super().save(*args, **kwargs)
 

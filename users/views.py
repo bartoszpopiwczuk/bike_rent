@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import UserRegisterForm, UserLoginForm  # UserLogoutForm
 from django.contrib.auth import authenticate, login
-from .models import CustomUser
 
 
 def user_register(request):
@@ -21,22 +20,16 @@ def user_register(request):
 def user_login(request):
     if request.method == "POST":
         form = UserLoginForm(request.POST)
-        if form.is_valid():
-            email = form.cleaned_data.get("email")
-            password = form.cleaned_data.get("password")
-            try:
-                user = CustomUser.objects.get(email=email)
-            except:
-                messages.error(request, "User does not exist")
+        email = request.POST.get("username")
+        password = request.POST.get("password")
+        user = authenticate(request, username=email, password=password)
 
-            user = authenticate(request, email=email, password=password)
-
-            if user is not None:
-                login(request, user)
-                messages.success(request, f"Logged in as {email}")
-                return redirect("all-bikes")
-            else:
-                messages.error(request, "Email or password is incorrect")
+        if user is not None:
+            login(request, user)
+            messages.success(request, f"Logged in as {user.email}")
+            return redirect("all-bikes")
+        else:
+            messages.error(request, "Email or password is incorrect")
     else:
         form = UserLoginForm()
 
