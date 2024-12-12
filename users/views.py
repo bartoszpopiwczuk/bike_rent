@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import UserRegisterForm, UserLoginForm  # UserLogoutForm
-from django.contrib.auth import authenticate, login
+from .forms import UserRegisterForm, UserLoginForm
+from django.contrib.auth import authenticate, login, logout
 
 
 def user_register(request):
@@ -26,7 +26,9 @@ def user_login(request):
 
         if user is not None:
             login(request, user)
-            messages.success(request, f"Logged in as {user.email}")
+            messages.success(
+                request, f"Logged in as {user.first_name} {user.last_name}"
+            )
             return redirect("all-bikes")
         else:
             messages.error(request, "Email or password is incorrect")
@@ -35,3 +37,9 @@ def user_login(request):
 
     context = {"form": form}
     return render(request, "users/login.html", context)
+
+
+def user_logout(request):
+    logout(request)
+    messages.info(request, f"You have been succesfully logged out.")
+    return redirect("all-bikes")
