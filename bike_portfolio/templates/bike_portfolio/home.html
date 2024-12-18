@@ -1,15 +1,15 @@
 {% extends "bike_portfolio/base.html" %}
 {% block content %}
 <section class="text-gray-400 bg-gray-800 body-font">
-    <div class="container px-auto py-16 mx-auto">
-      <div class="flex flex-wrap -mx-4 -mt-4 -mb-10 sm:-m-4">
+  <div class="container px-auto py-16 mx-auto">
+  <div class="flex flex-wrap -mx-4 -mt-4 -mb-4 sm:-m-4">
     {% for bike in bike_list %}
-    <div class="p-4 mb-4 md:w-1/3 sm:mb-0 border border-gray-800 hover:border hover:border-gray-900 m-0">
-        <a href="{% url "bike-detail" bike.id %}">
+    {% if bike.is_available %}
+      <div class="p-4 mb-4 md:w-1/3 sm:mb-0 border border-gray-800 hover:border hover:border-gray-900 m-0">
         <div class="h-64 overflow-hidden rounded-lg">
-          <img alt="content" class="object-contain object-center w-full h-full" src="{{bike.image_main.url }}">
+          <img alt="content" class="object-contain object-center w-full h-full" href="{% url "bike-detail" bike.id %}" src="{{bike.image_main.url }}">
         </div>
-        <h2 class="mt-5 text-xl font-medium text-white title-font"> <a href="{% url "bike-detail" bike.id %}"> {{ bike.brand }} {{bike.line}} {{ bike.model }}</a></h2>
+        <h2 class="mt-5 text-xl font-medium text-white title-font"> <a href="{% url "bike-detail" bike.id %}">{{ bike.brand }} {{bike.line}} {{ bike.model }}</a></h2>
         <p class="mt-2 text-base leading-relaxed">
             Year: {{ bike.year_production}}<br>
             Frame size: {{ bike.frame_size}}<br>
@@ -20,8 +20,23 @@
             <path d="M5 12h14M12 5l7 7-7 7"></path>
           </svg>
         </a>
+      </div>
+    {% elif not bike.is_available %}
+      <div class="p-4 mb-4 md:w-1/3 sm:mb-0 border border-gray-800 hover:border hover:border-gray-900 m-0">
+        <div class="h-64 overflow-hidden rounded-lg">
+          <img alt="content" class="object-contain object-center w-full h-full grayscale" href="{% url "bike-detail" bike.id %}" src="{{bike.image_main.url }}">
         </div>
-      {% endfor %}
+        <h2 class="mt-5 text-xl font-medium text-gray-500 title-font"> <a href="{% url "bike-detail" bike.id %}">{{ bike.brand }} {{bike.line}} {{ bike.model }}</a></h2>
+        <p class="mt-2 text-base leading-relaxed text-gray-600">
+            Year: {{ bike.year_production}}<br>
+            Frame size: {{ bike.frame_size}}<br>
+            Wheel size: {{ bike.wheel_size}}<br>
+        </p>
+        <a class="inline-flex items-center mt-3 text-yellow-600">Currently Unavailable</a>
+      </div>
+    {% endif %}
+    {% endfor %}
     </div>
+  </div>
 </section>
 {% endblock content%}
