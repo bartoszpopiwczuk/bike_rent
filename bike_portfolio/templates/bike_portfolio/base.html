@@ -30,6 +30,9 @@
       <button class="inline-flex items-center ml-4 px-3 py-1 mt-4 text-base bg-gray-800 border-0 rounded focus:outline-none hover:bg-yellow-500 md:mt-0"><a href="{% url "user-register"%}">Sign Up</a></button>
     {% else %}
       <button class="inline-flex items-center ml-5 px-3 py-1 mt-4 text-base bg-gray-800 border-0 rounded focus:outline-none hover:yellow-500 md:mt-0"><a href="{% url "user-logout"%}">Logout</a></button>
+      {% if user.is_superuser %}
+        <button class="inline-flex items-center ml-4 px-3 py-1 mt-4 text-base bg-gray-800 border-0 rounded focus:outline-none hover:bg-yellow-500 md:mt-0"><a href="{% url "admin:index"%}">Django Admin</a></button>
+      {% endif %}
     {% endif %}
   </div>
 </header>

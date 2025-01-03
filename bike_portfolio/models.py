@@ -1,4 +1,12 @@
 from django.db import models
+from django.utils.text import slugify
+from datetime import datetime
+
+
+def custom_upload_to(instance, filename):
+    ext = filename.split(".")[-1]  # file extension
+    new_filename = f"{slugify(instance.brand)}-{slugify(instance.line)}-{slugify(instance.model)}.{ext}"
+    return f"main_bike_image/{new_filename}"
 
 
 class Bicycle(models.Model):
@@ -11,7 +19,7 @@ class Bicycle(models.Model):
     year_production = models.IntegerField()
     color_primary = models.CharField(max_length=30)
     color_secondary = models.CharField(max_length=30, blank=True, null=True)
-    FRAME_SIZE_CHOICES = [
+    FRAME_SIZE_CHOICES: list[tuple[str, str]] = [
         ("XS", "XS"),
         ("S", "S"),
         ("S/M", "S/M"),
@@ -21,14 +29,14 @@ class Bicycle(models.Model):
         ("XL", "XL"),
     ]
     frame_size = models.CharField(max_length=3, choices=FRAME_SIZE_CHOICES)
-    FRAME_MATERIAL = [
+    FRAME_MATERIAL: list[tuple[str, str]] = [
         ("carbon", "Carbon"),
         ("steel", "Steel"),
         ("aluminium", "Aluminium"),
         ("titanium", "Titanium"),
     ]
     frame_material = models.CharField(max_length=9, choices=FRAME_MATERIAL)
-    WHEEL_SIZE_CHOICES = [
+    WHEEL_SIZE_CHOICES: list[tuple[float, str]] = [
         (24.0, "24"),
         (26.0, "26"),
         (27.5, "27.5"),
@@ -36,7 +44,7 @@ class Bicycle(models.Model):
     ]
     wheel_size = models.FloatField(choices=WHEEL_SIZE_CHOICES)
     tire_size_width = models.FloatField()
-    BICYCLE_PURPOSE_CHOICES = [
+    BICYCLE_PURPOSE_CHOICES: list[tuple[str, str]] = [
         ("mtb", "Mountain"),
         ("road", "Road"),
         ("gravel", "Gravel"),
@@ -52,11 +60,11 @@ class Bicycle(models.Model):
     is_available = models.BooleanField(default=True)
     is_serviceable = models.BooleanField(default=False)
     is_electric = models.BooleanField(default=False)
+    amount = models.IntegerField(default=1)
     prize_buy = models.FloatField()
     prize_rent = models.FloatField()
 
-    # TODO: autoedit added images
-    image_main = models.ImageField(default="default.png", upload_to="main_bike_image")
+    image_main = models.ImageField(default="default.png", upload_to=custom_upload_to)
 
     def __str__(self) -> str:
         return f"{self.brand} {self.line} {self.model}"
