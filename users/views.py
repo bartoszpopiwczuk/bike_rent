@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import UserRegisterForm, UserLoginForm
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 
 def user_register(request):
@@ -39,6 +40,7 @@ def user_login(request):
     return render(request, "users/login.html", context)
 
 
+@login_required
 def user_logout(request):
     logout(request)
     messages.info(request, f"You have been succesfully logged out.")

@@ -10,7 +10,7 @@ def all_bikes(request):
 def bike_detail(request, pk):
     context = {
         "website_title": "Bike name X",
-        "bike": Bicycle.objects.get(id=pk),  # TODO: fliter by id
+        "bike": Bicycle.objects.get(id=pk),
     }
     return render(request, "bike_portfolio/bike_detail.html", context)
 
