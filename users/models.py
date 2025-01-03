@@ -14,6 +14,7 @@ class CustomUser(AbstractUser):
     adress_street = models.CharField(max_length=50, blank=True, null=True)
     adress_number = models.CharField(max_length=10, blank=True, null=True)
     username = models.CharField(max_length=255, unique=True, blank=True)
+    is_staff = models.BooleanField(default=False)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["first_name", "last_name"]
@@ -22,7 +23,10 @@ class CustomUser(AbstractUser):
         """Automatically set the username if it's not provided"""
         if not self.username:
             super().save(*args, **kwargs)
-            self.username = f"user{self.id}"
+            if self.is_staff:
+                self.username = f"staff{self.id}"
+            else:
+                self.username = f"user{self.id}"
         super().save(*args, **kwargs)
 
     def __str__(self) -> str:
