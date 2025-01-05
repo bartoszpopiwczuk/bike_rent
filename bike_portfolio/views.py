@@ -16,19 +16,12 @@ def bike_detail(request, pk):
 
 
 def bike_purpose(request, purpose):
-    if purpose == "mtb":
-        web_title = "Mountain Bikes"
-    elif purpose == "road":
-        web_title = "Road Bikes "
-    elif purpose == "gravel":
-        web_title = "Gravel Bikes"
-    elif purpose == "city":
-        web_title = "City Bikes"
-    else:
-        web_title = "Other Bikes"
-
+    for p in Bicycle.BICYCLE_PURPOSE_CHOICES:
+        if purpose.lower() == p[0]:
+            web_title = f"{p[1]} Bikes"
+            break
     context = {
-        "website_title": web_title,
         "bike_list": Bicycle.objects.filter(purpose=purpose),
+        "website_title": web_title,
     }
     return render(request, "bike_portfolio/home.html", context)
