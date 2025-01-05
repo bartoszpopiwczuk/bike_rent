@@ -64,6 +64,8 @@ class Bicycle(models.Model):
     prize_buy = models.FloatField()
     prize_rent = models.FloatField()
 
+    repair = models.CharField(max_length=1000, blank=True, null=True)
+
     image_main = models.ImageField(default="default.png", upload_to=custom_upload_to)
 
     def __str__(self) -> str:
