@@ -11,6 +11,7 @@ def user_register(request):
         if form.is_valid():
             form.save()
             messages.success(request, f"Account created")
+            login(request, form.instance)
             return redirect("all-bikes")
     else:
         form = UserRegisterForm()
