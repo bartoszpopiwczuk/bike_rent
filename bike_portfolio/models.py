@@ -1,6 +1,5 @@
 from django.db import models
 from django.utils.text import slugify
-from datetime import datetime
 
 
 def custom_upload_to(instance, filename):
@@ -64,9 +63,13 @@ class Bicycle(models.Model):
     prize_buy = models.FloatField()
     prize_rent = models.FloatField()
 
-    repair = models.CharField(max_length=1000, blank=True, null=True)
-
     image_main = models.ImageField(default="default.png", upload_to=custom_upload_to)
+
+    def get_open_repairs(self):
+        return self.repair_logs.filter(is_fixed=False)  # type: ignore
+
+    def get_total_repairs(self):
+        return self.repair_logs.count()  # type: ignore
 
     def __str__(self) -> str:
         return f"{self.brand} {self.line} {self.model}"
