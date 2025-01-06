@@ -2,31 +2,33 @@
 {% block content %}
 
 <section class="text-gray-400 bg-gray-800 body-font">
-  <div class="container px-5 py-24 mx-auto">
-    <div class="flex flex-col text-center w-full mb-20">
-      <h1 class="text-2xl font-medium title-font mb-4 text-white tracking-widest">Repair Log</h1>
+  <div class="container p-4 mx-auto">
+    <div class="flex flex-col text-center w-full m-8">
+      <h1 class="text-2xl font-medium title-font text-white tracking-widest">Repair Log</h1>
     </div>
     <div class="flex flex-wrap -m-4">
     {% for bike in bike_list %}
     <div class="p-4 w-full border border-gray-800 hover:border hover:border-gray-900">
         <div class="h-full flex sm:flex-row flex-col items-center sm:justify-start justify-center text-center sm:text-left">
-          <img alt="team" class="flex-shrink-0 rounded-lg h-48 object-cover object-center sm:mb-0 mb-4" src="{{bike.image_main.url}}">
+          <img alt="team" class="flex-shrink-0 rounded-lg h-48 object-cover object-center" src="{{bike.image_main.url}}">
           <div class="flex-grow sm:pl-8">
             <h2 class="title-font font-medium text-lg text-white"></h2>
             <h3 class="text-gray-500 mb-3">{{ bike.brand }} {{bike.line}} {{ bike.model }}</h3>
             {% if bike.repair%}
             <p class="mb-4 text-red-500">{{bike.repair}}</p>
-            {% else %}
-             <p class="mb-4 text-green-500">Serwis nie jest wymagany</p>
-            {% endif %}
             <span class="inline-flex">
-              <button class="inline-flex text-white bg-yellow-500 border-0 py-1 px-4 focus:outline-none hover:bg-yellow-600 rounded">Button</button>
-                <a class="text-yellow-400 inline-flex items-center ml-4">Learn More
-                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
-                    <path d="M5 12h14M12 5l7 7-7 7"></path>
-                    </svg>
-                </a>
+              <button class="inline-flex text-white bg-yellow-500 border-0 py-1 px-4 focus:outline-none hover:bg-yellow-600 rounded" href="{% url "staff-repair" bike.id %}">Details</button>
             </span>
+            {% else %}
+             <p class="mb-4 text-green-500">No action needed</p>
+             <span class="inline-flex">
+              <a class="text-yellow-400 inline-flex items-center" href="{% url "staff-detail" bike.id %}">Details
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
+                <path d="M5 12h14M12 5l7 7-7 7"></path>
+                </svg>
+              </a>
+            </span>
+            {% endif %}
           </div>
         </div>
       </div>
