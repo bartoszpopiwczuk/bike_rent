@@ -1,13 +1,15 @@
 from django.shortcuts import render
 from django.contrib.admin.views.decorators import staff_member_required
 from bike_portfolio.models import Bicycle
-
+from django.db.models import Count, Q
 
 @staff_member_required
 def staff_main(request):
-    bike_list_sorted: list[Bicycle] = sorted(
-        Bicycle.objects.all(), key=lambda bike: bike.repair is not None, reverse=True
-    )
+    bike_list_sorted = Bicycle.objects.annotate(
+        unresolved_issues_count=Count(
+            "repair_logs", filter=Q(repair_logs__is_fixed=False)
+        )
+    ).order_by("-unresolved_issues_count")
     context = {
         "website_title": "bikes.com - Staff Panel - Main",
         "bike_list": bike_list_sorted,

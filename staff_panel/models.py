@@ -19,12 +19,19 @@ class Issue(models.Model):
     is_fixed = models.BooleanField(default=False)
 
     date_reported = models.DateField(auto_now_add=True)
-    date_fixed = models.DateField(null=True, blank=True)
-
-    added_by = models.ForeignKey(
-        get_user_model(),  # Refers to the User or Custom User model
+    reported_by = models.ForeignKey(
+        get_user_model(),
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
         related_name="reported_issues",
+    )
+
+    date_fixed = models.DateField(null=True, blank=True)
+    fixed_by = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="fixed_issues",
     )
