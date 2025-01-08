@@ -15,7 +15,9 @@ class Issue(models.Model):
         "bike_portfolio.Bicycle", on_delete=models.CASCADE, related_name="repair_logs"
     )
     issue_description = models.TextField(max_length=1000, blank=False, null=False)
-    issue_image = models.ImageField(default="default.png", upload_to=custom_upload_to)
+    issue_image = models.ImageField(
+        default="default.png", upload_to=custom_upload_to, blank=True, null=True
+    )
     is_fixed = models.BooleanField(default=False)
 
     date_reported = models.DateField(auto_now_add=True)

@@ -42,6 +42,37 @@
     </div>
   </div>
 </section>
+
+<section class="text-gray-400 bg-gray-800 body-font">
+  <div class="container p-4 mx-auto">
+    <div class="flex flex-col text-center w-full m-8">
+      <h1 class="text-2xl font-medium title-font text-white tracking-widest">Repair Log</h1>
+    </div>
+    <div class="flex flex-wrap -m-4">
+    {% for issue in issues %}
+    <div class="p-4 w-full border border-gray-800 hover:border hover:border-gray-900 mb-4">
+        <div class="h-full flex sm:flex-row flex-col items-center sm:justify-start justify-center text-center sm:text-left">
+          <img alt="team" class="flex-shrink-0 rounded-lg h-48 object-cover object-center" src="{{issue.issue_image.url}}">
+          <div class="flex-grow sm:pl-8">
+            <h2 class="title-font font-medium text-lg text-white"></h2>
+            <h3 class="text-gray-500 mb-3">{{ issue.reported_by }} {{issue.date_reported}}</h3>
+            <p class="mb-4 text-red-500">{{ issue.issue_description }}</p>
+            <span class="inline-flex">
+              <button class="inline-flex text-white bg-yellow-500 border-0 py-1 px-4 focus:outline-none hover:bg-yellow-600 rounded mr-4"> <a href="{% url "staff-add-issue" bike.id %}">Add Issue</a></button>
+              <a class="text-yellow-400 inline-flex items-center" href="{% url "staff-detail" bike.id %}">Details
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
+                  <path d="M5 12h14M12 5l7 7-7 7"></path>
+                </svg>
+              </a>
+            </span>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+    </div>
+  </div>
+</section>
+
 <section class="text-gray-500 body-font">
   <div class="container px-5 py-24 mx-auto flex flex-wrap">
     <div class="flex w-full mb-20 flex-wrap">
