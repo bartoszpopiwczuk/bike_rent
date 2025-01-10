@@ -54,10 +54,11 @@ def staff_add_issue(request, pk):
     bike = Bicycle.objects.get(id=pk)
     if request.method == "POST":
         form = AddIssueForm(request.POST, request.FILES or None)
-        issue = form.save(commit=False)
-        issue.bicycle = bike
-        issue.reported_by = request.user
-        issue.save()
+        if form.is_valid():
+            issue = form.save(commit=False)
+            issue.bicycle = bike
+            issue.reported_by = request.user
+            issue.save()
         return redirect("staff-main")
     else:
         form = AddIssueForm()
@@ -88,4 +89,33 @@ def staff_delete_issue(request, pk):
 
 @staff_member_required
 def staff_edit_issue(request, pk):
-    pass
+    print("Request Method:", request.method)
+    print("1")
+    issue = Issue.objects.get(id=pk)
+    print("2")
+    if request.method == "POST":  # POST request: you submit the form
+        print("3")
+        form = AddIssueForm(request.POST, request.FILES or None, instance=issue)
+        if form.is_valid():
+            print("4")
+            form.save()
+            next_url = request.POST.get(
+                "current-page", "staff-main"
+            )  # Optional: Redirect back to current page
+            print("5")
+            return redirect(next_url)
+    else:  # GET request: you get this to see the form
+        print("6")
+        form = AddIssueForm(instance=issue)
+        print(form.initial)
+        print("7")
+
+    context = {
+        "website_title": f"bikes.com - Staff Panel - Edit Issue #{issue.id}",
+        "form": form,
+        "issue": issue,
+        "bike": issue.bicycle,
+    }
+    print("8")
+
+    return render(request, "staff_panel/edit_issue.html", context)
