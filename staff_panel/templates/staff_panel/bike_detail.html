@@ -58,8 +58,12 @@
             <h3 class="text-gray-500 mb-3">{{ issue.reported_by }} {{issue.date_reported}}</h3>
             <p class="mb-4 text-red-500">{{ issue.issue_description }}</p>
             <span class="inline-flex">
-              <button class="inline-flex text-white bg-yellow-500 border-0 py-1 px-4 focus:outline-none hover:bg-yellow-600 rounded mr-4"> <a href="{% url "staff-add-issue" bike.id %}">Add Issue</a></button>
-              <a class="text-yellow-400 inline-flex items-center" href="{% url "staff-detail" bike.id %}">Details
+              <form action="{% url 'staff-delete-issue' issue.id %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="current-page" value="{{ request.get_full_path }}">
+                <button class="inline-flex text-white bg-yellow-500 border-0 py-1 px-4 focus:outline-none hover:bg-yellow-600 rounded mr-4">Mark as fixed</button>
+              </form>
+              <a class="text-yellow-400 inline-flex items-center" href="{% url "staff-detail" bike.id %}">(ADD EDIT ISSUE FEATURE)
                 <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
                   <path d="M5 12h14M12 5l7 7-7 7"></path>
                 </svg>

@@ -4,15 +4,23 @@ from bike_portfolio.models import Bicycle
 from django.db.models import Count, Q
 from .forms import AddIssueForm
 from django.shortcuts import redirect
+from .models import Issue
+from django.utils import timezone
 
 
 @staff_member_required
 def staff_main(request):
     bike_list_sorted = Bicycle.objects.annotate(
+        # adds extra field to each bike not stored in the database
         unresolved_issues_count=Count(
-            "repair_logs", filter=Q(repair_logs__is_fixed=False)
+            # counts the number of related issues with is_fixed=False
+            "repair_logs",
+            filter=Q(repair_logs__is_fixed=False),
+            # stores the count in the extra field
         )
-    ).order_by("-unresolved_issues_count")
+    ).order_by(
+        "-unresolved_issues_count"
+    )  # "-" means descending order
     context = {
         "website_title": "bikes.com - Staff Panel - Main",
         "bike_list": bike_list_sorted,
@@ -26,7 +34,7 @@ def staff_detail(request, pk):
     context = {
         "website_title": f"bikes.com - Staff Panel - {bike.brand} {bike.line} {bike.model}",
         "bike": bike,
-        "issues": bike.repair_logs.all(),
+        "issues": bike.repair_logs.filter(is_fixed=False),  # type: ignore
     }
     return render(request, "staff_panel/bike_detail.html", context)
 
@@ -61,3 +69,23 @@ def staff_add_issue(request, pk):
     }
 
     return render(request, "staff_panel/add_issue.html", context)
+
+
+@staff_member_required
+def staff_delete_issue(request, pk):
+    if request.method == "POST":
+        issue = Issue.objects.get(id=pk)
+        issue.is_fixed = True
+        issue.date_fixed = timezone.now()
+        issue.fixed_by = request.user
+        issue.save()
+        next_url = request.POST.get(
+            "current-page", "staff-main"
+        )  # "current page" is name in html
+        return redirect(next_url)
+    return redirect("staff-main")  # if not POST request
+
+
+@staff_member_required
+def staff_edit_issue(request, pk):
+    pass
