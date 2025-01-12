@@ -89,26 +89,18 @@ def staff_delete_issue(request, pk):
 
 @staff_member_required
 def staff_edit_issue(request, pk):
-    print("Request Method:", request.method)
-    print("1")
     issue = Issue.objects.get(id=pk)
-    print("2")
     if request.method == "POST":  # POST request: you submit the form
-        print("3")
         form = AddIssueForm(request.POST, request.FILES or None, instance=issue)
         if form.is_valid():
-            print("4")
             form.save()
+            print("all good")
             next_url = request.POST.get(
                 "current-page", "staff-main"
             )  # Optional: Redirect back to current page
-            print("5")
             return redirect(next_url)
     else:  # GET request: you get this to see the form
-        print("6")
         form = AddIssueForm(instance=issue)
-        print(form.initial)
-        print("7")
 
     context = {
         "website_title": f"bikes.com - Staff Panel - Edit Issue #{issue.id}",
@@ -116,6 +108,5 @@ def staff_edit_issue(request, pk):
         "issue": issue,
         "bike": issue.bicycle,
     }
-    print("8")
 
     return render(request, "staff_panel/edit_issue.html", context)

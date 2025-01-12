@@ -5,8 +5,8 @@ from django.contrib.auth import get_user_model
 
 def custom_upload_to(instance, filename):
     ext = filename.split(".")[-1]  # file extension
-    new_filename = f"{slugify(instance.brand)}-{slugify(instance.line)}-{slugify(instance.model)} issue {instance.id}.{ext}"
-    return f"main_bike_image/{new_filename}"
+    new_filename = f"{slugify(instance.bicycle.brand)}-{slugify(instance.bicycle.line)}-{slugify(instance.bicycle.model)}-issue-nr-{instance.id}.{ext}"
+    return f"staff_issue_image/{new_filename}"
 
 
 class Issue(models.Model):
@@ -37,3 +37,15 @@ class Issue(models.Model):
         blank=True,
         related_name="fixed_issues",
     )
+
+    def save(self, *args, **kwargs):
+        try:
+            this = Issue.objects.get(id=self.id)
+            if (
+                this.issue_image != self.issue_image
+                and this.issue_image.name != "default.png"
+            ):
+                this.issue_image.delete(save=False)
+        except Issue.DoesNotExist:
+            pass
+        super().save(*args, **kwargs)
