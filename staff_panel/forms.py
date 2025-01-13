@@ -1,5 +1,6 @@
 from django import forms
 from .models import Issue
+from bike_portfolio.models import Bicycle
 
 field_formatting = "w-full bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-2 focus:ring-yellow-900 rounded border border-gray-600 focus:border-yellow-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out mb-4"
 
@@ -28,3 +29,15 @@ class AddIssueForm(forms.ModelForm):
     class Meta:
         model = Issue
         fields = ["issue_description", "issue_image"]
+
+
+class AddBikeForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs["class"] = field_formatting
+
+    class Meta:
+        model = Bicycle
+        fields = "__all__"

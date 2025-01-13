@@ -4,7 +4,11 @@
 <section class="text-gray-400 bg-gray-800 body-font">
   <div class="container p-4 mx-auto">
     <div class="flex flex-col text-center w-full m-8">
-      <h1 class="text-2xl font-medium title-font text-white tracking-widest">Repair Log</h1>
+      <h1 class="text-4xl font-medium title-font text-white">Repair Log</h1>
+      <form action="{% url 'staff-add-bike' %}" method="GET">
+        {% csrf_token %}
+        <button class=" mx-auto text-white bg-yellow-500 border-0 py-2 px-8 m-4 focus:outline-none hover:bg-yellow-600 rounded text-lg "><a href="{% url "staff-add-bike" %}">Add new bike</a></button>
+      </form>
     </div>
     <div class="flex flex-wrap -m-4">
     {% for bike in bike_list %}

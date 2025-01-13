@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.admin.views.decorators import staff_member_required
 from bike_portfolio.models import Bicycle
 from django.db.models import Count, Q
-from .forms import AddIssueForm
+from .forms import AddIssueForm, AddBikeForm
 from django.shortcuts import redirect
 from .models import Issue
 from django.utils import timezone
@@ -84,7 +84,7 @@ def staff_delete_issue(request, pk):
             "current-page", "staff-main"
         )  # "current page" is name in html
         return redirect(next_url)
-    return redirect("staff-main")  # if not POST request
+    return redirect("staff-main")  # if not POST
 
 
 @staff_member_required
@@ -110,3 +110,20 @@ def staff_edit_issue(request, pk):
     }
 
     return render(request, "staff_panel/edit_issue.html", context)
+
+
+def staff_add_bike(request):
+    if request.method == "POST":
+        form = AddBikeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("staff-main")
+    else:
+        form = AddBikeForm()
+
+    context = {
+        "website_title": "bikes.com - Staff Panel - Add Bike",
+        "form": form,
+    }
+
+    return render(request, "staff_panel/add_bike.html", context)
