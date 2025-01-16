@@ -6,6 +6,7 @@ from .forms import AddIssueForm, AddBikeForm
 from django.shortcuts import redirect
 from .models import Issue
 from django.utils import timezone
+from django.contrib import messages
 
 
 @staff_member_required
@@ -59,6 +60,7 @@ def staff_add_issue(request, pk):
             issue.bicycle = bike
             issue.reported_by = request.user
             issue.save()
+            messages.success(request, "Issue added successfully")
         return redirect("staff-main")
     else:
         form = AddIssueForm()
@@ -80,6 +82,7 @@ def staff_delete_issue(request, pk):
         issue.date_fixed = timezone.now()
         issue.fixed_by = request.user
         issue.save()
+        messages.success(request, "Issue marked as fixed")
         next_url = request.POST.get(
             "current-page", "staff-main"
         )  # "current page" is name in html
@@ -94,6 +97,7 @@ def staff_edit_issue(request, pk):
         form = AddIssueForm(request.POST, request.FILES or None, instance=issue)
         if form.is_valid():
             form.save()
+            messages.success(request, "Issue updated successfully")
             print("all good")
             next_url = request.POST.get(
                 "current-page", "staff-main"
@@ -127,3 +131,11 @@ def staff_add_bike(request):
     }
 
     return render(request, "staff_panel/add_bike.html", context)
+
+
+def staff_delete_bike(request, pk):
+    if request.method == "POST":
+        bike = Bicycle.objects.get(id=pk)
+        bike.delete()
+        messages.success(request, "Bike deleted successfully")
+    return redirect("staff-main")
