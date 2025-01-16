@@ -121,6 +121,7 @@ def staff_add_bike(request):
         form = AddBikeForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, "Bike added successfully")
             return redirect("staff-main")
     else:
         form = AddBikeForm()
@@ -136,6 +137,8 @@ def staff_add_bike(request):
 def staff_delete_bike(request, pk):
     if request.method == "POST":
         bike = Bicycle.objects.get(id=pk)
+        if bike.repair_logs.exists():  # type: ignore
+            bike.repair_logs.all().delete()  # type: ignore
         bike.delete()
-        messages.success(request, "Bike deleted successfully")
+        messages.success(request, "Bike has been deleted successfully")
     return redirect("staff-main")
