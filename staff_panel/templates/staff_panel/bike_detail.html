@@ -113,6 +113,10 @@
         </div>
       </div>
     </div>
+    <form action="{% url "staff-delete-bike" bike.id %}" method="POST" class="w-full">
+      {% csrf_token %}
+      <button class="text-white bg-red-500 border-0 w-full my-8 py-2 px-8 focus:outline-none hover:bg-yellow-600 rounded text-lg" >Delete this bike</button>
+    </form>
   </div>
 </section>
 

@@ -134,8 +134,10 @@ def staff_add_bike(request):
     return render(request, "staff_panel/add_bike.html", context)
 
 
+@staff_member_required
 def staff_delete_bike(request, pk):
     if request.method == "POST":
+        print("deleting bike")
         bike = Bicycle.objects.get(id=pk)
         if bike.repair_logs.exists():  # type: ignore
             bike.repair_logs.all().delete()  # type: ignore
