@@ -113,9 +113,13 @@
         </div>
       </div>
     </div>
-    <form action="{% url "staff-delete-bike" bike.id %}" method="POST" class="w-full">
+    <form action="{% url "staff-delete-bike" bike.id %}" method="POST" class="w-1/2">
       {% csrf_token %}
       <button class="text-white bg-red-500 border-0 w-full my-8 py-2 px-8 focus:outline-none hover:bg-yellow-600 rounded text-lg" >Delete this bike</button>
+    </form>
+    <form action="{% url "staff-edit-bike" bike.id %}" method="GET" class="w-1/2">
+      {% csrf_token %}
+      <button class="text-white bg-yellow-500 border-0 w-full my-8 py-2 px-8 focus:outline-none hover:bg-yellow-600 rounded text-lg" >Edit this bike</button>
     </form>
   </div>
 </section>

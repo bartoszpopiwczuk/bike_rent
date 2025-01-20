@@ -144,3 +144,23 @@ def staff_delete_bike(request, pk):
         bike.delete()
         messages.success(request, "Bike has been deleted successfully")
     return redirect("staff-main")
+
+@staff_member_required
+def staff_edit_bike(request, pk):
+    bike = Bicycle.objects.get(id=pk)
+    if request.method == "POST":
+        form = AddBikeForm(request.POST, instance=bike)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Bike updated successfully")
+            return redirect("staff-main")
+    else:
+        form = AddBikeForm(instance=bike)
+
+    context = {
+        "website_title": f"bikes.com - Staff Panel - Edit Bike #{bike.id}",
+        "form": form,
+        "bike": bike,
+    }
+
+    return render(request, "staff_panel/edit_bike.html", context)

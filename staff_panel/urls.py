@@ -10,4 +10,5 @@ urlpatterns = [
     path("edit-issue/<int:pk>", views.staff_edit_issue, name="staff-edit-issue"),
     path("add-bike/", views.staff_add_bike, name="staff-add-bike"),
     path("delete-bike/<int:pk>", views.staff_delete_bike, name="staff-delete-bike"),
+    path("edit-bike/<int:pk>", views.staff_edit_bike, name="staff-edit-bike"),
 ]
