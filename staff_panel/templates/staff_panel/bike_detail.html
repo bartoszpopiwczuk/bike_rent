@@ -3,7 +3,7 @@
 
 <section class="text-gray-400 bg-gray-800 body-font">
   <div class="container p-4 mx-auto">
-    <div class="flex flex-col text-center w-full m-8">
+    <div class="flex flex-col w-full m-8">
       <h1 class="text-2xl font-medium title-font text-white tracking-widest">Repair Log</h1>
       {% if issue is None %}
         <p class="mb-4 text-green-500">No action needed</p>
@@ -113,13 +113,13 @@
         </div>
       </div>
     </div>
-    <form action="{% url "staff-delete-bike" bike.id %}" method="POST" class="w-1/2">
+    <form action="{% url "staff-delete-bike" bike.id %}" method="POST">
       {% csrf_token %}
-      <button class="text-white bg-red-500 border-0 w-full my-8 py-2 px-8 focus:outline-none hover:bg-yellow-600 rounded text-lg" >Delete this bike</button>
+      <button class="text-white bg-red-500 border-0 w-auto m-2 py-2 px-8 focus:outline-none hover:bg-yellow-600 rounded text-lg" >Delete this bike</button>
     </form>
-    <form action="{% url "staff-edit-bike" bike.id %}" method="GET" class="w-1/2">
+    <form action="{% url "staff-edit-bike" bike.id %}" method="GET">
       {% csrf_token %}
-      <button class="text-white bg-yellow-500 border-0 w-full my-8 py-2 px-8 focus:outline-none hover:bg-yellow-600 rounded text-lg" >Edit this bike</button>
+      <button class="text-white bg-yellow-500 border-0 w-auto m-2 py-2 px-8 focus:outline-none hover:bg-yellow-600 rounded text-lg" >Edit this bike</button>
     </form>
   </div>
 </section>
