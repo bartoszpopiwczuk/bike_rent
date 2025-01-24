@@ -25,6 +25,15 @@
             <span class="inline-flex">
             {% endif %}
             <button class="inline-flex text-white bg-yellow-500 border-0 py-1 px-4 focus:outline-none hover:bg-yellow-600 rounded mr-4"> <a href="{% url "staff-add-issue" bike.id %}">Add Issue</a></button>
+            <form action="" method="get">
+              {% csrf_token %}
+              {% if bike.is_available %}
+              <button class="inline-flex text-white bg-red-500 border-0 py-1 px-4 focus:outline-none hover:bg-yellow-600 rounded mr-4"> <a href="{% url "staff_mark_available" bike.id %}">Mark as unavailable</a></button>
+              {% else %}
+              <button class="inline-flex text-white bg-green-500 border-0 py-1 px-4 focus:outline-none hover:bg-yellow-600 rounded mr-4"> <a href="{% url "staff_mark_available" bike.id %}">Mark as available</a></button>
+              {% endif %}
+            </form>
+
               <a class="text-yellow-400 inline-flex items-center" href="{% url "staff-detail" bike.id %}">Details
                 <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
                   <path d="M5 12h14M12 5l7 7-7 7"></path>

@@ -137,13 +137,13 @@ def staff_add_bike(request):
 @staff_member_required
 def staff_delete_bike(request, pk):
     if request.method == "POST":
-        print("deleting bike")
         bike = Bicycle.objects.get(id=pk)
         if bike.repair_logs.exists():  # type: ignore
             bike.repair_logs.all().delete()  # type: ignore
         bike.delete()
         messages.success(request, "Bike has been deleted successfully")
     return redirect("staff-main")
+
 
 @staff_member_required
 def staff_edit_bike(request, pk):
@@ -164,3 +164,17 @@ def staff_edit_bike(request, pk):
     }
 
     return render(request, "staff_panel/edit_bike.html", context)
+
+
+@staff_member_required
+def staff_mark_available(request, pk):
+    bike = Bicycle.objects.get(id=pk)
+    if bike.is_available:
+        bike.is_available = False
+        messages.success(request, "Bike marked as unavailable")
+        bike.save()
+    elif bike.is_available == False:
+        bike.is_available = True
+        messages.success(request, "Bike marked as available")
+        bike.save()
+    return redirect("staff-main")
