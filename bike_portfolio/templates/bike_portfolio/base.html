@@ -92,16 +92,16 @@
         <h2 class="mb-3 text-sm font-medium tracking-widest text-white title-font">CATEGORIES</h2>
         <nav class="mb-10 list-none">
           <li>
-            <a class="text-gray-400 hover:text-white">Mountain</a>
+            <a class="text-gray-400 hover:text-white" href="{% url "bike-purpose" purpose="mtb" %}">Mountain</a>
           </li>
           <li>
-            <a class="text-gray-400 hover:text-white">Road</a>
+            <a class="text-gray-400 hover:text-white" href="{% url "bike-purpose" purpose="road" %}">Road</a>
           </li>
           <li>
-            <a class="text-gray-400 hover:text-white">Gravel</a>
+            <a class="text-gray-400 hover:text-white" href="{% url "bike-purpose" purpose="gravel" %}">Gravel</a>
           </li>
           <li>
-            <a class="text-gray-400 hover:text-white">City</a>
+            <a class="text-gray-400 hover:text-white" href="{% url "bike-purpose" purpose="city" %}">City</a>
           </li>
         </nav>
       </div>
@@ -124,7 +124,7 @@
       <a class="flex items-center justify-center font-medium text-white title-font md:justify-start">
         <span class="ml-3 text-xl">bikes.com</span>
       </a>
-      <p class="mt-4 text-sm text-gray-400 sm:ml-6 sm:mt-0"> Your bike manager ―
+      <p class="mt-4 text-sm text-gray-400 sm:ml-6 sm:mt-0"> Django bike manager ―
         <a href="https://github.com/bartoszpopiwczuk" class="ml-1 text-gray-500" target="_blank" rel="noopener noreferrer">Bartosz Popiwczuk</a>
       </p>
       <span class="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
