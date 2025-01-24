@@ -118,7 +118,7 @@ def staff_edit_issue(request, pk):
 
 def staff_add_bike(request):
     if request.method == "POST":
-        form = AddBikeForm(request.POST)
+        form = AddBikeForm(request.POST, request.FILES or None)
         if form.is_valid():
             form.save()
             messages.success(request, "Bike added successfully")
@@ -149,7 +149,7 @@ def staff_delete_bike(request, pk):
 def staff_edit_bike(request, pk):
     bike = Bicycle.objects.get(id=pk)
     if request.method == "POST":
-        form = AddBikeForm(request.POST, instance=bike)
+        form = AddBikeForm(request.POST, request.FILES or None, instance=bike)
         if form.is_valid():
             form.save()
             messages.success(request, "Bike updated successfully")
