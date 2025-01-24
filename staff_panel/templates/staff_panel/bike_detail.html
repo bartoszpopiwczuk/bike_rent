@@ -17,7 +17,7 @@
           <div class="flex-grow sm:pl-8">
             <h2 class="title-font font-medium text-lg text-white"></h2>
             <h3 class="text-gray-500 mb-3">{{ issue.reported_by }} {{issue.date_reported}}</h3>
-            <p class="mb-4 text-red-500">{{ issue.issue_description }}</p>
+            <p class="mb-4 text-red-500 line-clamp-5">{{ issue.issue_description }}</p>
             <span class="inline-flex">
               <form action="{% url 'staff-delete-issue' issue.id %}" method="POST">
                 {% csrf_token %}

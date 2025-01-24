@@ -3,7 +3,12 @@ from .models import Bicycle
 
 
 def all_bikes(request):
-    context = {"website_title": "bikes.com - Main", "bike_list": Bicycle.objects.all()}
+    context = {
+        "website_title": "bikes.com - Main",
+        "bike_list": Bicycle.objects.all().order_by(
+            "-is_available"
+        ),  # sorting by availablity, first True
+    }
     return render(request, "bike_portfolio/home.html", context)
 
 
