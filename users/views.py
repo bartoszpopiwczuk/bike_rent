@@ -51,8 +51,9 @@ def user_logout(request):
 
 
 @login_required
-def add_to_favourite(request, pk):
-    if request.METHOD == "POST":
+def add_favorite(request, pk):
+    print("jesteśmy tutaj")
+    if request.method == "POST":
         bike = Bicycle.objects.get(id=pk)
         favorite, created = Favorite.objects.get_or_create(user=request.user, bike=bike)
         if created:
