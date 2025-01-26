@@ -34,7 +34,7 @@ class CustomUser(AbstractUser):
         return f"User {self.first_name} {self.last_name}"
 
 
-class Favourite:
+class Favourite(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     bike = models.ForeignKey(Bicycle, on_delete=models.CASCADE)
     added_at = models.DateTimeField(auto_now_add=True)
