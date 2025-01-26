@@ -35,13 +35,13 @@ class Bicycle(models.Model):
         ("titanium", "Titanium"),
     ]
     frame_material = models.CharField(max_length=9, choices=FRAME_MATERIAL)
-    WHEEL_SIZE_CHOICES: list[tuple[float, str]] = [
-        (24.0, "24"),
-        (26.0, "26"),
-        (27.5, "27.5"),
-        (29.0, "29"),
+    WHEEL_SIZE_CHOICES: list[tuple[str, str]] = [
+        ('24.0"', "24"),
+        ('26.0"', "26"),
+        ('27.5"', "27.5"),
+        ('29.0"', "29"),
     ]
-    wheel_size = models.FloatField(choices=WHEEL_SIZE_CHOICES)
+    wheel_size = models.CharField(choices=WHEEL_SIZE_CHOICES, max_length=10)
     tire_size_width = models.FloatField()
     BICYCLE_PURPOSE_CHOICES: list[tuple[str, str]] = [
         ("mtb", "Mountain"),

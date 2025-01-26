@@ -3,6 +3,8 @@ from django.contrib import messages
 from .forms import UserRegisterForm, UserLoginForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from bike_portfolio.models import Bicycle
+from .models import Favorite
 
 
 def user_register(request):
@@ -46,3 +48,18 @@ def user_logout(request):
     logout(request)
     messages.info(request, f"You have been succesfully logged out.")
     return redirect("all-bikes")
+
+
+@login_required
+def add_to_favourite(request, pk):
+    if request.METHOD == "POST":
+        bike = Bicycle.objects.get(id=pk)
+        favorite, created = Favorite.objects.get_or_create(user=request.user, bike=bike)
+        if created:
+            messages.success(request, f"{bike} has been added to your favourites")
+        else:
+            favorite.delete()
+            messages.info(request, f"{bike} is deleted from your favorites")
+
+    next_url = request.POST.get("current-page", "staff-main")
+    return redirect(next_url)
