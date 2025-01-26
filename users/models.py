@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from bike_portfolio.models import Bicycle
 
 
 class CustomUser(AbstractUser):
@@ -31,3 +32,16 @@ class CustomUser(AbstractUser):
 
     def __str__(self) -> str:
         return f"User {self.first_name} {self.last_name}"
+
+
+class Favourite:
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    bike = models.ForeignKey(Bicycle, on_delete=models.CASCADE)
+    added_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ("user", "bike")
+        # each bike can be favourited once
+
+    def __str__(self) -> str:
+        return f"{self.user} - {self.bike}"
