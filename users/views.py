@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from bike_portfolio.models import Bicycle
 from .models import Favorite
+from django.urls import reverse
 
 
 def user_register(request):
@@ -52,7 +53,6 @@ def user_logout(request):
 
 @login_required
 def add_favorite(request, pk):
-    print("jesteśmy tutaj")
     if request.method == "POST":
         bike = Bicycle.objects.get(id=pk)
         favorite, created = Favorite.objects.get_or_create(user=request.user, bike=bike)
@@ -61,6 +61,4 @@ def add_favorite(request, pk):
         else:
             favorite.delete()
             messages.info(request, f"{bike} is deleted from your favorites")
-
-    next_url = request.POST.get("current-page", "staff-main")
-    return redirect(next_url)
+    return redirect(reverse("bike-detail", kwargs={"pk": bike.id}))

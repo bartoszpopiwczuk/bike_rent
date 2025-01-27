@@ -83,10 +83,6 @@ def staff_delete_issue(request, pk):
         issue.fixed_by = request.user
         issue.save()
         messages.success(request, "Issue marked as fixed")
-        next_url = request.POST.get(
-            "current-page", "staff-main"
-        )  # "current page" is name in html
-        return redirect(next_url)
     return redirect("staff-main")  # if not POST
 
 

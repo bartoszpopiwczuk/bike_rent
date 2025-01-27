@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import Bicycle
+from users.models import Favorite
 
 
 def all_bikes(request):
@@ -14,9 +15,11 @@ def all_bikes(request):
 
 def bike_detail(request, pk):
     bike = Bicycle.objects.get(id=pk)
+    is_fav = Favorite.objects.filter(user=request.user, bike=bike).exists()
     context = {
         "website_title": f"bikes.com - {bike.brand} {bike.line} {bike.model}",
         "bike": bike,
+        "is_fav": is_fav,
     }
     return render(request, "bike_portfolio/bike_detail.html", context)
 
