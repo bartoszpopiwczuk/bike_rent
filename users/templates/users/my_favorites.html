@@ -1,0 +1,57 @@
+{% extends "bike_portfolio/base.html" %}
+
+{% block content %}
+
+<section class="text-gray-400 bg-gray-800 body-font">
+  <div class="container px-auto py-16 mx-auto">
+  <div class="flex flex-wrap -mx-4 -mt-4 -mb-4 sm:-m-4">
+    {% for bike in bike_list %}
+    {% if bike.is_available %}
+    <a href="{% url "bike-detail" bike.id %}">
+      <div class="p-4 mb-4 md:w-1/3 sm:mb-0 border border-gray-800 hover:border hover:border-gray-900 m-0" >
+        <div class="h-64 overflow-hidden rounded-lg">
+          <img alt="content" class="object-contain object-center w-full h-full" href="{% url "bike-detail" bike.id %}" src="{{bike.image_main.url }}">
+        </div>
+        <h2 class="mt-5 text-xl font-medium text-white title-font"> <a href="{% url "bike-detail" bike.id %}">{{ bike.brand }} {{bike.line}} {{ bike.model }}</a></h2>
+        <p class="mt-2 text-base leading-relaxed">
+            Year: {{ bike.year_production}}<br>
+            Frame size: {{ bike.frame_size}}<br>
+            Wheel size: {{ bike.wheel_size}}<br>
+        </p>
+        <a class="inline-flex items-center mt-3 text-yellow-500" href="{% url "bike-detail" bike.id %}">More
+          <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
+            <path d="M5 12h14M12 5l7 7-7 7"></path>
+          </svg>
+        </a>
+        <form action="{% url "user-add-favorite" bike.id %}" method="post" class="inline-flex">
+            {% csrf_token %}
+            <button class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4" >
+            <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5 text-red-500" viewBox="0 0 24 24">
+              <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
+            </svg>
+          </button>
+          </form>
+    </div>
+    </a>
+    {% elif not bike.is_available %}
+    <a href="{% url "bike-detail" bike.id %}">
+      <div class="p-4 mb-4 md:w-1/3 sm:mb-0 border border-gray-800 hover:border hover:border-gray-900 m-0">
+        <div class="h-64 overflow-hidden rounded-lg">
+          <img alt="content" class="object-contain object-center w-full h-full grayscale" href="{% url "bike-detail" bike.id %}" src="{{bike.image_main.url }}">
+        </div>
+        <h2 class="mt-5 text-xl font-medium text-gray-500 title-font"> <a href="{% url "bike-detail" bike.id %}">{{ bike.brand }} {{bike.line}} {{ bike.model }}</a></h2>
+        <p class="mt-2 text-base leading-relaxed text-gray-600">
+            Year: {{ bike.year_production}}<br>
+            Frame size: {{ bike.frame_size}}<br>
+            Wheel size: {{ bike.wheel_size}}<br>
+        </p>
+        <a class="inline-flex items-center mt-3 text-yellow-600">Currently Unavailable</a>
+      </div>
+     </a>
+    {% endif %}
+    {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% endblock content %}

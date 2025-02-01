@@ -62,3 +62,14 @@ def add_favorite(request, pk):
             favorite.delete()
             messages.info(request, f"{bike} is deleted from your favorites")
     return redirect(reverse("bike-detail", kwargs={"pk": bike.id}))
+
+
+@login_required
+def my_favorites(request):
+    fav = Favorite.objects.filter(user=request.user)
+    favorite_bikes = []
+    for f in fav:
+        favorite_bikes.append(f.bike)
+
+    context = {"bike_list": favorite_bikes}
+    return render(request, "users/my_favorites.html", context)
