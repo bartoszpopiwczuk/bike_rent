@@ -1,11 +1,13 @@
-from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import UserRegisterForm, UserLoginForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from bike_portfolio.models import Bicycle
-from .models import Favorite
+from django.shortcuts import redirect, render
 from django.urls import reverse
+
+from bike_portfolio.models import Bicycle
+
+from .forms import UserLoginForm, UserRegisterForm
+from .models import Favorite
 
 
 def user_register(request):
@@ -61,7 +63,7 @@ def add_favorite(request, pk):
         else:
             favorite.delete()
             messages.info(request, f"{bike} is deleted from your favorites")
-    return redirect(reverse("bike-detail", kwargs={"pk": bike.id}))
+    return redirect(request.POST.get("next", "bike-detail"))
 
 
 @login_required
@@ -70,6 +72,5 @@ def my_favorites(request):
     favorite_bikes = []
     for f in fav:
         favorite_bikes.append(f.bike)
-
     context = {"bike_list": favorite_bikes}
     return render(request, "users/my_favorites.html", context)

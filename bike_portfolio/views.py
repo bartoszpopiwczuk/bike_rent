@@ -1,6 +1,8 @@
 from django.shortcuts import render
-from .models import Bicycle
+
 from users.models import Favorite
+
+from .models import Bicycle
 
 
 def all_bikes(request):
@@ -30,7 +32,7 @@ def bike_purpose(request, purpose):
             web_title = f"{p[1]} Bikes"
             break
     context = {
-        "bike_list": Bicycle.objects.filter(purpose=purpose),
+        "bike_list": Bicycle.objects.filter(purpose=purpose).order_by("-is_available"),
         "website_title": f"bikes.com - {web_title}",
     }
     return render(request, "bike_portfolio/home.html", context)

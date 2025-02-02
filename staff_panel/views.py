@@ -1,12 +1,13 @@
-from django.shortcuts import render
-from django.contrib.admin.views.decorators import staff_member_required
-from bike_portfolio.models import Bicycle
-from django.db.models import Count, Q
-from .forms import AddIssueForm, AddBikeForm
-from django.shortcuts import redirect
-from .models import Issue
-from django.utils import timezone
 from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
+from django.db.models import Count, Q
+from django.shortcuts import redirect, render
+from django.utils import timezone
+
+from bike_portfolio.models import Bicycle
+
+from .forms import AddBikeForm, AddIssueForm
+from .models import Issue
 
 
 @staff_member_required
