@@ -68,9 +68,8 @@ def add_favorite(request, pk):
 
 @login_required
 def my_favorites(request):
-    fav = Favorite.objects.filter(user=request.user)
-    favorite_bikes = []
-    for f in fav:
-        favorite_bikes.append(f.bike)
+    favorite_bikes = Bicycle.objects.filter(favorite__user=request.user).order_by(
+        "-is_available"
+    )
     context = {"bike_list": favorite_bikes}
     return render(request, "users/my_favorites.html", context)
