@@ -17,7 +17,10 @@ def all_bikes(request):
 
 def bike_detail(request, pk):
     bike = Bicycle.objects.get(id=pk)
-    is_fav = Favorite.objects.filter(user=request.user, bike=bike).exists()
+    if request.user.is_authenticated:
+        is_fav = Favorite.objects.filter(user=request.user, bike=bike).exists()
+    else:
+        is_fav = False
     context = {
         "website_title": f"bikes.com - {bike.brand} {bike.line} {bike.model}",
         "bike": bike,
