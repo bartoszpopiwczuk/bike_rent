@@ -8,9 +8,8 @@ from .models import Bicycle
 def all_bikes(request):
     context = {
         "website_title": "bikes.com - Main",
-        "bike_list": Bicycle.objects.all().order_by(
-            "-is_available"
-        ),  # sorting by availablity, first True
+        "bike_list": Bicycle.objects.all().order_by("-is_available"),
+        # sorting by availablity, first True
     }
     return render(request, "bike_portfolio/home.html", context)
 
@@ -30,6 +29,7 @@ def bike_detail(request, pk):
 
 
 def bike_purpose(request, purpose):
+    """Iterates over list of tuples. If puropses match, then the second element of the tuple will be name of the websie. Once match is made, the iteration stops."""
     for p in Bicycle.BICYCLE_PURPOSE_CHOICES:
         if purpose.lower() == p[0]:
             web_title = f"{p[1]} Bikes"
