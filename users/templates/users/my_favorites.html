@@ -24,7 +24,7 @@
             <path d="M5 12h14M12 5l7 7-7 7"></path>
           </svg>
         </a>
-        <form action="{% url "user-add-favorite" bike.id %}" method="post" class="flex items-center justify-between flex items-center flex-wrap ml-auto">
+        <form action="{% url "user-toggle-favorite" bike.id %}" method="post" class="flex items-center justify-between flex items-center flex-wrap ml-auto">
             {% csrf_token %}
             <input type="hidden" name="next" value="{{ request.path }}">
             <button class="flex justity-end rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500" >
@@ -50,7 +50,7 @@
         </p>
         <div class="flex items-center flex-wrap justify-between">
         <a class="inline-flex items-center mt-3 text-yellow-600">Currently Unavailable</a>
-          <form action="{% url "user-add-favorite" bike.id %}" method="post" class="flex items-center justify-between flex items-center flex-wrap ml-auto">
+          <form action="{% url "user-toggle-favorite" bike.id %}" method="post" class="flex items-center justify-between flex items-center flex-wrap ml-auto">
             {% csrf_token %}
             <input type="hidden" name="next" value="{{ request.path }}">
             <button class="flex justity-end rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500" >

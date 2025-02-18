@@ -53,10 +53,12 @@ def user_logout(request):
 
 
 @login_required
-def add_favorite(request, pk):
+def toggle_favorite(request, pk):
     if request.method == "POST":
         bike = Bicycle.objects.get(id=pk)
-        favorite, created = Favorite.objects.get_or_create(user=request.user, bike=bike)
+        favorite, created = Favorite.objects.get_or_create(
+            user=request.user, bike=bike
+        )  # Powyższa metoda zwraca tuple. Do favorite przypisany jest tworzony obiekt, created jest boolean i powie nam, czy ten obiekt favorite musiał być stworzony czy już istniał.
         if created:
             messages.success(request, f"{bike} has been added to your favourites")
         else:
