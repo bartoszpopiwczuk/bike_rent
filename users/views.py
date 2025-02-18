@@ -19,7 +19,7 @@ def user_register(request):
             return redirect("all-bikes")
     else:
         form = UserRegisterForm()
-    context = {"form": form}
+    context = {"form": form, "website_title": "bikes.com - Sign Up"}
     return render(request, "users/register.html", context)
 
 
@@ -41,7 +41,7 @@ def user_login(request):
     else:
         form = UserLoginForm()
 
-    context = {"form": form}
+    context = {"form": form, "website_title": "bikes.com - Log In"}
     return render(request, "users/login.html", context)
 
 
@@ -64,7 +64,9 @@ def toggle_favorite(request, pk):
         else:
             favorite.delete()
             messages.info(request, f"{bike} is deleted from your favorites")
-    return redirect(request.POST.get("next", "bike-detail"))
+    return redirect(
+        request.POST.get("next", "bike-detail")
+    )  # Jeśli w formularzu przesłanym metodą POST znajduje się ukryte pole next, użytkownik zostanie przekierowany pod jego wartość, tutaj do poprzedniej strony.
 
 
 @login_required
@@ -72,5 +74,5 @@ def my_favorites(request):
     favorite_bikes = Bicycle.objects.filter(favorite__user=request.user).order_by(
         "-is_available"
     )
-    context = {"bike_list": favorite_bikes}
+    context = {"bike_list": favorite_bikes, "website_title": "bikes.com - Favorite Bikes"}
     return render(request, "users/my_favorites.html", context)
