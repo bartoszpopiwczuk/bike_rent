@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render
 
 from users.models import Favorite
@@ -6,10 +7,15 @@ from .models import Bicycle
 
 
 def all_bikes(request):
+    objects = Bicycle.objects.all().order_by(
+        "-is_available"
+    )  # sorting by availablity, first True
+    p = Paginator(objects, 6)
+    page = request.GET.get("page")
+    bikes = p.get_page(page)
     context = {
         "website_title": "bikes.com - Main",
-        "bike_list": Bicycle.objects.all().order_by("-is_available"),
-        # sorting by availablity, first True
+        "bike_list": bikes,
     }
     return render(request, "bike_portfolio/home.html", context)
 
