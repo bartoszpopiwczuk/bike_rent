@@ -1,5 +1,4 @@
 from django.core.paginator import Paginator
-from django.db.models import Q
 from django.shortcuts import render
 
 from users.models import Favorite
@@ -14,14 +13,15 @@ def all_bikes(request):
     objects, search_query = searchBicycles(request)
 
     # Pagination
-    p = Paginator(objects, 6)
-    page = request.GET.get("page")
-    bikes = p.get_page(page)
+    paginator = Paginator(objects, per_page=6)
+    page_number = request.GET.get("page")
+    bikes = paginator.get_page(page_number)
 
     context = {
         "website_title": "bikes.com - Main",
         "bike_list": bikes,
         "search_query": search_query,
+        "paginator": paginator,
     }
     return render(request, "bike_portfolio/home.html", context)
 
