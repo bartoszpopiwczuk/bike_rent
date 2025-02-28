@@ -5,29 +5,15 @@ from django.shortcuts import render
 from users.models import Favorite
 
 from .models import Bicycle
+from .utils import searchBicycles
 
 
 def all_bikes(request):
 
-    # Search
-    search_query = ""
-    if request.GET.get("search_query"):
-        search_query = request.GET.get("search_query")
-    print(f"Search: {search_query}")
+    # Search 
+    objects, search_query = searchBicycles(request)
 
     # Pagination
-    objects = Bicycle.objects.filter(
-        Q(brand__icontains=search_query)
-        | Q(line__icontains=search_query)
-        | Q(model__icontains=search_query)
-        | Q(year_production__iexact=search_query)
-        | Q(frame_size__iexact=search_query)
-        | Q(frame_material__iexact=search_query)
-        | Q(wheel_size_iexact=search_query)
-        | Q(purpose__iexact=search_query)
-    ).order_by(
-        "-is_available"
-    )  # sorting by availablity, first True
     p = Paginator(objects, 6)
     page = request.GET.get("page")
     bikes = p.get_page(page)
