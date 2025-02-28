@@ -1,4 +1,5 @@
 from django.core.paginator import Paginator
+from django.db.models import Q
 from django.shortcuts import render
 
 from users.models import Favorite
@@ -7,15 +8,29 @@ from .models import Bicycle
 
 
 def all_bikes(request):
-    objects = Bicycle.objects.all().order_by(
+
+    # Search
+    search_query = ""
+    if request.GET.get("search_query"):
+        search_query = request.GET.get("search_query")
+    print(f"Search: {search_query}")
+
+    # Pagination
+    objects = Bicycle.objects.filter(
+        Q(brand__icontains=search_query)
+        | Q(brand__icontains=search_query)
+        | Q(model__icontains=search_query)
+    ).order_by(
         "-is_available"
     )  # sorting by availablity, first True
     p = Paginator(objects, 6)
     page = request.GET.get("page")
     bikes = p.get_page(page)
+
     context = {
         "website_title": "bikes.com - Main",
         "bike_list": bikes,
+        "search_query": search_query,
     }
     return render(request, "bike_portfolio/home.html", context)
 
