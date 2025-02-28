@@ -20,6 +20,11 @@ def all_bikes(request):
         Q(brand__icontains=search_query)
         | Q(line__icontains=search_query)
         | Q(model__icontains=search_query)
+        | Q(year_production__iexact=search_query)
+        | Q(frame_size__iexact=search_query)
+        | Q(frame_material__iexact=search_query)
+        | Q(wheel_size_iexact=search_query)
+        | Q(purpose__iexact=search_query)
     ).order_by(
         "-is_available"
     )  # sorting by availablity, first True
