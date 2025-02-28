@@ -73,3 +73,6 @@ class Bicycle(models.Model):
 
     def __str__(self) -> str:
         return f"{self.brand} {self.line} {self.model}"
+
+    class Meta:
+        ordering = ['-is_available']

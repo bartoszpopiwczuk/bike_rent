@@ -71,8 +71,9 @@ def toggle_favorite(request, pk):
 
 @login_required
 def my_favorites(request):
-    favorite_bikes = Bicycle.objects.filter(favorite__user=request.user).order_by(
-        "-is_available"
-    )
-    context = {"bike_list": favorite_bikes, "website_title": "bikes.com - Favorite Bikes"}
+    favorite_bikes = Bicycle.objects.filter(favorite__user=request.user)
+    context = {
+        "bike_list": favorite_bikes,
+        "website_title": "bikes.com - Favorite Bikes",
+    }
     return render(request, "users/my_favorites.html", context)

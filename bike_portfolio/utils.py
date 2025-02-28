@@ -16,8 +16,6 @@ def searchBicycles(request):
         | Q(frame_material__iexact=search_query)
         | Q(wheel_size__iexact=search_query)
         | Q(purpose__iexact=search_query)
-    ).order_by(
-        "-is_available"
-    )  # sorting by availablity, first True
+    )
 
     return objects, search_query

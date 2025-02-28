@@ -10,7 +10,7 @@ from .utils import searchBicycles
 
 def all_bikes(request):
 
-    # Search 
+    # Search
     objects, search_query = searchBicycles(request)
 
     # Pagination
@@ -47,7 +47,7 @@ def bike_purpose(request, purpose):
             web_title = f"{p[1]} Bikes"
             break
     context = {
-        "bike_list": Bicycle.objects.filter(purpose=purpose).order_by("-is_available"),
+        "bike_list": Bicycle.objects.filter(purpose=purpose),
         "website_title": f"bikes.com - {web_title}",
     }
     return render(request, "bike_portfolio/home.html", context)
