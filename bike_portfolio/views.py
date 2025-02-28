@@ -18,7 +18,7 @@ def all_bikes(request):
     # Pagination
     objects = Bicycle.objects.filter(
         Q(brand__icontains=search_query)
-        | Q(brand__icontains=search_query)
+        | Q(line__icontains=search_query)
         | Q(model__icontains=search_query)
     ).order_by(
         "-is_available"
