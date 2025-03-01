@@ -13,7 +13,7 @@ def all_bikes(request):
     objects, search_query = searchBicycles(request)
 
     # Pagination
-    paginator = Paginator(objects, per_page=1)
+    paginator = Paginator(objects, per_page=6)
     page_number = request.GET.get("page")
     bikes = paginator.get_page(page_number)
 
