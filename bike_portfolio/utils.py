@@ -1,9 +1,18 @@
+from django.core.paginator import Page, Paginator
 from django.db.models import Q
 
 from .models import Bicycle
 
 
-def searchBicycles(request):
+def paginateBicycles(request, objects, objects_per_page) -> tuple:
+    paginator = Paginator(objects, per_page=objects_per_page)
+    page_number = request.GET.get("page")
+    bikes: Page = paginator.get_page(page_number)
+
+    return bikes, paginator
+
+
+def searchBicycles(request) -> tuple:
     search_query: str = ""
     if request.GET.get("search_query"):
         search_query = request.GET.get("search_query")
@@ -16,6 +25,6 @@ def searchBicycles(request):
         | Q(frame_material__iexact=search_query)
         | Q(wheel_size__iexact=search_query)
         | Q(purpose__iexact=search_query)
-    )
+    ).distinct()
 
     return objects, search_query

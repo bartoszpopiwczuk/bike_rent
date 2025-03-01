@@ -133,7 +133,7 @@
     {% endif %}
     <!-- Current: "z-10 bg-indigo-600 text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600", Default: "text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0" -->
     {% for page in paginator %}
-    {% if page.number >= bike_list.number|add:"-2" and page.number <= bike_list.number|add:"2" %}
+    {% if page.number >= bike_list.number|add:"-3" and page.number <= bike_list.number|add:"3" %}
     {% if page.number == bike_list.number %}
     <a href="?page={{page.number}}" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-200 bg-yellow-500 ring-1 ring-gray-900 ring-inset hover:bg-yellow-600 focus:z-20 focus:outline-offset-0">{{page.number}}</a>
     {% else %}
