@@ -9,6 +9,7 @@ from .utils import paginateBicycles, searchBicycles
 
 def all_bikes(request):
 
+    # FIXME Search has to be working for other pages. Currently it is only working for home page. If I search in 'favorites' it should only show the bikes that are in favorites.
     # Search
     objects, search_query = searchBicycles(request)
 

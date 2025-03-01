@@ -5,6 +5,7 @@ from django.shortcuts import redirect, render
 from django.utils import timezone
 
 from bike_portfolio.models import Bicycle
+from bike_portfolio.utils import paginateBicycles
 
 from .forms import AddBikeForm, AddIssueForm
 from .models import Issue
@@ -12,7 +13,7 @@ from .models import Issue
 
 @staff_member_required
 def staff_main(request):
-    bike_list_sorted = Bicycle.objects.annotate(
+    objects = Bicycle.objects.annotate(
         # adds extra field to each bike not stored in the database
         unresolved_issues_count=Count(
             # counts the number of related issues with is_fixed=False
@@ -23,9 +24,14 @@ def staff_main(request):
     ).order_by(
         "-unresolved_issues_count"
     )  # "-" means descending order
+
+    # Pagination
+    bikes, paginator = paginateBicycles(request, objects, objects_per_page=5)
+
     context = {
         "website_title": "bikes.com - Staff Panel - Main",
-        "bike_list": bike_list_sorted,
+        "bike_list": bikes,
+        "paginator": paginator,
     }
     return render(request, "staff_panel/home.html", context)
 
