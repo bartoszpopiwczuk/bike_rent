@@ -136,13 +136,16 @@ LOGIN_REDIRECT_URL = "all-bikes"
 LOGIN_URL = "/users/login/"
 
 # Email settings
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-
 from dotenv import load_dotenv
 
 load_dotenv()
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+DEFAULT_FROM_EMAIL = os.environ.get("EMAIL_USER")
+ZOHO_ZEPTOMAIL_API_KEY_TOKEN = "Send Mail Token"
+ZOHO_ZEPTOMAIL_HOSTED_REGION = "zeptomail.zoho.com"
+EMAIL_HOST = "smtp.zoho.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
 EMAIL_HOST_USER = os.environ.get("EMAIL_USER")
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_PASSWORD")

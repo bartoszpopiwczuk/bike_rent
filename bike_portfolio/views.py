@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.core.mail import send_mail
 from django.core.paginator import Page, Paginator
 from django.shortcuts import redirect, render
 
@@ -54,6 +56,14 @@ def bike_purpose(request, purpose):
 
 def send_email(request):
     if request.method == "POST":
-        pass
+
+        send_mail(
+            subject="Welcome to bikes.com - Django Project",
+            message="""This is a test message
+            Link to github: https://github.com/bartoszpopiwczuk""",
+            from_email=settings.EMAIL_HOST_USER,
+            recipient_list=[request.POST.get("email_recipient")],
+            fail_silently=False,
+        )
 
     return redirect(request.POST.get("next", "all-bikes"))
