@@ -13,8 +13,13 @@ def paginateBicycles(request, objects, objects_per_page) -> tuple:
     return bikes, paginator
 
 
+# TODO Make this work universally with different views
+
+
 def searchBicycles(request) -> tuple:
-    search_query: str = "" # initial search query is going to be empty, empty string gives all objects
+    search_query: str = ""
+    # initial search query is going to be empty, empty string gives all objects
+
     if request.GET.get("search_query"):
         search_query = request.GET.get("search_query")
     objects = Bicycle.objects.filter(
