@@ -10,8 +10,10 @@
     {% endif %}
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
+{% include "header.html" %}
+
 <body class="bg-gray-800">
-<header class="text-gray-400 bg-gray-900 body-font">
   <div class="container flex flex-col flex-wrap items-center p-5 mx-auto md:flex-row">
     <a class="flex items-center mb-4 font-medium text-white title-font md:mb-0">
       <svg fill="none" stroke="currentColor" class="w-10 h-10 p-1 text-white bg-yellow-500 rounded-full" viewBox="0 0 24 24">
@@ -55,7 +57,7 @@
       {% endif %}
     {% endif %}
   </div>
-</header>
+
 {% if messages %}
   {% for message in messages %}
     {% if 'success' in message.tags %}
