@@ -1,5 +1,5 @@
 from django.core.paginator import Page, Paginator
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 from users.models import Favorite
 
@@ -50,3 +50,10 @@ def bike_purpose(request, purpose):
         "website_title": f"bikes.com - {web_title}",
     }
     return render(request, "bike_portfolio/home.html", context)
+
+
+def send_email(request):
+    if request.method == "POST":
+        pass
+
+    return redirect(request.POST.get("next", "all-bikes"))
