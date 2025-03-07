@@ -16,21 +16,28 @@ def paginateBicycles(request, objects, objects_per_page) -> tuple:
 # TODO Make this work universally with different views
 
 
+# ! Now take more than one search word!
 def searchBicycles(request) -> tuple:
     search_query: str = ""
+    objects = Bicycle.objects.all()
     # initial search query is going to be empty, empty string gives all objects
 
     if request.GET.get("search_query"):
-        search_query = request.GET.get("search_query")
-    objects = Bicycle.objects.filter(
-        Q(brand__icontains=search_query)
-        | Q(line__icontains=search_query)
-        | Q(model__icontains=search_query)
-        | Q(year_production__iexact=search_query)
-        | Q(frame_size__iexact=search_query)
-        | Q(frame_material__iexact=search_query)
-        | Q(wheel_size__iexact=search_query)
-        | Q(purpose__iexact=search_query)
-    ).distinct()
+        search_query = request.GET.get("search_query").strip()
+        search_terms = search_query.split()
+        query = Q()
+
+        for q in search_terms:
+            query |= (
+                Q(brand__icontains=q)
+                | Q(line__icontains=q)
+                | Q(model__icontains=q)
+                | Q(year_production__iexact=q)
+                | Q(frame_size__iexact=q)
+                | Q(frame_material__iexact=q)
+                | Q(wheel_size__iexact=q)
+                | Q(purpose__iexact=q)
+            )
+        objects = Bicycle.objects.filter(query).distinct()
 
     return objects, search_query
