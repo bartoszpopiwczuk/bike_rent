@@ -18,24 +18,25 @@
           <img alt="team" class="flex-shrink-0 rounded-lg h-48 object-cover object-center" src="{{bike.image_main.url}}">
           <div class="flex-grow sm:pl-8">
             {% if bike.is_available %}
-            <h2 class="text-white mb-1 text-lg">{{ bike.brand }} {{bike.line}} {{ bike.model }}</h2>
+              <h2 class="text-white mb-1 text-lg">{{ bike.brand }} {{bike.line}} {{ bike.model }}</h2>
             {% else %}
-            <h2 class="mb-1 text-gray-400 text-lg">{{ bike.brand }} {{bike.line}} {{ bike.model }} (unavailable)</h2>
+              <h2 class="mb-1 text-gray-400 text-lg">{{ bike.brand }} {{bike.line}} {{ bike.model }} (unavailable)</h2>
             {% endif%}
             <h2 class="text-gray-500 mb-1">ID: {{ bike.id }}</h2>
             {% if bike.unresolved_issues_count > 0 %}
-            <p class="mb-4 text-red-500"> <a href="{% url "staff-detail" bike.id %}">Unresolved Issues: {{ bike.unresolved_issues_count }}</a></p>
+              <p class="mb-4 text-red-500"> <a href="{% url "staff-detail" bike.id %}">Unresolved Issues: {{ bike.unresolved_issues_count }}</a></p>
+              <span class="inline-flex">
             {% else %}
-            <p class="mb-4 text-green-500">No action needed</p>
-            <span class="inline-flex">
+              <p class="mb-4 text-green-500">No action needed</p>
+              <span class="inline-flex">
             {% endif %}
             <button class="inline-flex text-white bg-yellow-500 border-0 py-1 px-4 focus:outline-none hover:bg-yellow-600 rounded mr-4"> <a href="{% url "staff-add-issue" bike.id %}">Add Issue</a></button>
             <form action="" method="get">
               {% csrf_token %}
               {% if bike.is_available %}
-              <button class="inline-flex text-white bg-yellow-500 border-0 py-1 px-4 focus:outline-none hover:bg-yellow-600 rounded mr-4"> <a href="{% url "staff_mark_available" bike.id %}">Mark as unavailable</a></button>
+                <button class="inline-flex text-white bg-yellow-500 border-0 py-1 px-4 focus:outline-none hover:bg-yellow-600 rounded mr-4"> <a href="{% url "staff_mark_available" bike.id %}">Mark as unavailable</a></button>
               {% else %}
-              <button class="inline-flex text-white bg-yellow-500 border-0 py-1 px-4 focus:outline-none hover:bg-yellow-600 rounded mr-4"> <a href="{% url "staff_mark_available" bike.id %}">Mark as available</a></button>
+                <button class="inline-flex text-white bg-yellow-500 border-0 py-1 px-4 focus:outline-none hover:bg-yellow-600 rounded mr-4"> <a href="{% url "staff_mark_available" bike.id %}">Mark as available</a></button>
               {% endif %}
             </form>
 
