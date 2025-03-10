@@ -1,6 +1,9 @@
 from django.http import JsonResponse
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 
+@api_view(['GET'])
 def getRoutes(request):
     routes = [
         {'GET': '/api/bikes'},
@@ -10,4 +13,4 @@ def getRoutes(request):
         {'POST': '/api/bikes/token'},
         {'POST': '/api/bikes/token/refresh'},
     ]
-    return JsonResponse(routes, safe=False)
+    return Response(routes)
