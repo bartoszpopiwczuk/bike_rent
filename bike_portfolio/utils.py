@@ -17,10 +17,14 @@ def paginateBicycles(request, objects, objects_per_page) -> tuple:
 
 
 # ! Now take more than one search word!
-def searchBicycles(request) -> tuple:
+def searchBicycles(request, subset) -> tuple:
     search_query: str = ""
-    objects = Bicycle.objects.all()
-    # initial search query is going to be empty, empty string gives all objects
+
+    # initial search query is going to be empty, empty string gives all objects, from chosen subset
+    if subset == "user_favorites":
+        objects = Bicycle.objects.filter(favorite__user=request.user)
+    else:
+        objects = Bicycle.objects.all()
 
     if request.GET.get("search_query"):
         search_query = request.GET.get("search_query").strip()
@@ -38,6 +42,10 @@ def searchBicycles(request) -> tuple:
                 | Q(wheel_size__iexact=q)
                 | Q(purpose__iexact=q)
             )
-        objects = Bicycle.objects.filter(query).distinct()
+
+        if subset == "user_favorites":
+            objects = objects.filter(query, favorite__user=request.user)
+        else:
+            objects = Bicycle.objects.filter(query).distinct()
 
     return objects, search_query

@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
 from bike_portfolio.models import Bicycle
-from bike_portfolio.utils import paginateBicycles
+from bike_portfolio.utils import paginateBicycles, searchBicycles
 
 from .forms import UserLoginForm, UserRegisterForm
 from .models import Favorite
@@ -72,7 +72,10 @@ def toggle_favorite(request, pk):
 
 @login_required
 def my_favorites(request):
-    favorite_bikes = Bicycle.objects.filter(favorite__user=request.user)
+
+    # Search
+    favorite_bikes, search_query = searchBicycles(request, subset="user_favorites")
+
 
     # Pagination
     bikes, paginator = paginateBicycles(
@@ -82,6 +85,8 @@ def my_favorites(request):
     context = {
         "bike_list": bikes,
         "paginator": paginator,
+        "search_query": search_query,
         "website_title": "bikes.com - Favorite Bikes",
+        "go_after_search": "user-my-favorites",
     }
     return render(request, "users/my_favorites.html", context)
