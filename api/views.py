@@ -10,4 +10,4 @@ def getRoutes(request):
         {'POST': '/api/bikes/token'},
         {'POST': '/api/bikes/token/refresh'},
     ]
-    return JsonResponse(routes)
+    return JsonResponse(routes, safe=False)
