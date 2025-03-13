@@ -24,3 +24,9 @@ def getBicycles(request):
     bikes = Bicycle.objects.all()
     serializer = BicycleSerializer(bikes, many=True)
     return Response(serializer.data)
+
+@api_view(['GET'])
+def getBicycle(request, pk):
+    bike = Bicycle.objects.get(id=pk)
+    serializer = BicycleSerializer(bike, many=False)
+    return Response(serializer.data)
