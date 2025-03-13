@@ -1,6 +1,6 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.text import slugify
-from django.contrib.auth import get_user_model
 
 
 def custom_upload_to(instance, filename):
