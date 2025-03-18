@@ -2,8 +2,19 @@ from rest_framework import serializers
 
 from bike_portfolio.models import Bicycle
 from staff_panel.models import Issue
+from users.models import CustomUser, Favorite
 
 
+class FavoriteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Favorite
+        fields = "__all__"
+
+
+class CustomUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = "__all__"
 class IssueSerializer(serializers.ModelSerializer):
     class Meta:
         model = Issue

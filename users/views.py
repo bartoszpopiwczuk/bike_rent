@@ -61,7 +61,7 @@ def toggle_favorite(request, pk):
             user=request.user, bike=bike
         )  # Powyższa metoda zwraca tuple. Do favorite przypisany jest tworzony obiekt, created jest boolean i powie nam, czy ten obiekt favorite musiał być stworzony czy już istniał.
         if created:
-            messages.success(request, f"{bike} has been added to your favourites")
+            messages.success(request, f"{bike} has been added to your favorites")
         else:
             favorite.delete()
             messages.info(request, f"{bike} is deleted from your favorites")

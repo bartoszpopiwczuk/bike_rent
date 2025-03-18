@@ -22,7 +22,7 @@ def searchBicycles(request, subset) -> tuple:
 
     # initial search query is going to be empty, empty string gives all objects, from chosen subset
     if subset == "user_favorites":
-        objects = Bicycle.objects.filter(favorite__user=request.user)
+        objects = Bicycle.objects.filter(favorites__user=request.user)
     else:
         objects = Bicycle.objects.all()
 
@@ -44,7 +44,7 @@ def searchBicycles(request, subset) -> tuple:
             )
 
         if subset == "user_favorites":
-            objects = objects.filter(query, favorite__user=request.user)
+            objects = objects.filter(query, favorites__user=request.user).distinct()
         else:
             objects = Bicycle.objects.filter(query).distinct()
 

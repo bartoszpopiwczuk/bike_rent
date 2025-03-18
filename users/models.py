@@ -36,13 +36,13 @@ class CustomUser(AbstractUser):
 
 
 class Favorite(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    bike = models.ForeignKey(Bicycle, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="favorites")
+    bike = models.ForeignKey(Bicycle, on_delete=models.CASCADE, related_name="favorites")
     added_at = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        unique_together = ("user", "bike")
-        # each bike can be favourited once
 
     def __str__(self) -> str:
         return f"{self.user} - {self.bike}"
+
+    class Meta:
+        unique_together = ("user", "bike") # each bike can be favourited once
+        ordering = ["-added_at"]

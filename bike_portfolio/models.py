@@ -65,6 +65,7 @@ class Bicycle(models.Model):
 
     image_main = models.ImageField(default="default.png", upload_to=custom_upload_to)
 
+    # In Issues model, in ForeignKey field related_name is set to "repair_logs"
     def get_open_repairs(self):
         return self.repair_logs.filter(is_fixed=False)  # type: ignore
 

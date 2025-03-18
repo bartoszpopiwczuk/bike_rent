@@ -2,6 +2,7 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.core.paginator import Page, Paginator
 from django.shortcuts import redirect, render
+from django.urls import reverse
 
 from users.models import Favorite
 
@@ -53,6 +54,7 @@ def bike_purpose(request, purpose):
     context = {
         "bike_list": Bicycle.objects.filter(purpose=purpose),
         "website_title": f"bikes.com - {web_title}",
+        "go_after_search": reverse("bike-purpose", kwargs={"purpose": purpose}),
     }
     return render(request, "bike_portfolio/home.html", context)
 
