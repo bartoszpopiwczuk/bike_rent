@@ -56,6 +56,7 @@ def bike_purpose(request, purpose):
         "website_title": f"bikes.com - {web_title}",
         "go_after_search": reverse("bike-purpose", kwargs={"purpose": purpose}),
     }
+    print(context["go_after_search"])
     return render(request, "bike_portfolio/home.html", context)
 
 
