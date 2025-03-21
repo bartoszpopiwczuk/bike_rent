@@ -10,8 +10,6 @@ from .utils import paginateBicycles, searchBicycles
 
 
 def all_bikes(request):
-    # FIXME Search has to be working for other pages. Currently it is only working for home page. If I search in 'favorites' it should only show the bikes that are in favorites.
-
     # Search
     objects, search_query = searchBicycles(request, subset="all")
 
@@ -44,6 +42,7 @@ def bike_detail(request, pk):
 
 def bike_purpose(request, purpose):
     """Iterates over list of tuples. If puropses match, then the second element of the tuple will be name of the websie. Once match is made, the iteration stops."""
+
     web_title = (
         "bikes.com - Main"  # default title to negate the risk of not finding the match
     )
@@ -51,10 +50,13 @@ def bike_purpose(request, purpose):
         if purpose.lower() == p[0]:
             web_title = f"{p[1]} Bikes"
             break
+    bikes, search_query = searchBicycles(request, subset=[purpose])
+
     context = {
-        "bike_list": Bicycle.objects.filter(purpose=purpose),
+        "bike_list": bikes,
         "website_title": f"bikes.com - {web_title}",
         "go_after_search": reverse("bike-purpose", kwargs={"purpose": purpose}),
+        "search_query": search_query,
     }
     print(context["go_after_search"])
     return render(request, "bike_portfolio/home.html", context)

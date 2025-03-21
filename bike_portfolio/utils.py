@@ -5,7 +5,6 @@ from .models import Bicycle
 
 
 def paginateBicycles(request, objects, objects_per_page) -> tuple:
-
     paginator = Paginator(objects, per_page=objects_per_page)
     page_number = request.GET.get("page")
     bikes: Page = paginator.get_page(number=page_number)
@@ -21,7 +20,10 @@ def searchBicycles(request, subset) -> tuple:
     search_query: str = ""
 
     # initial search query is going to be empty, empty string gives all objects, from chosen subset
-    if subset == "user_favorites":
+    if type(subset) is list:
+        objects = Bicycle.objects.filter(purpose=subset[0])
+        print("subset is list")
+    elif subset == "user_favorites":
         objects = Bicycle.objects.filter(favorites__user=request.user)
     else:
         objects = Bicycle.objects.all()
@@ -42,8 +44,9 @@ def searchBicycles(request, subset) -> tuple:
                 | Q(wheel_size__iexact=q)
                 | Q(purpose__iexact=q)
             )
-
-        if subset == "user_favorites":
+        if type(subset) is tuple:
+            objects = objects.filter(purpose=subset[0]).distinct()
+        elif subset == "user_favorites":
             objects = objects.filter(query, favorites__user=request.user).distinct()
         else:
             objects = Bicycle.objects.filter(query).distinct()
