@@ -24,4 +24,3 @@ urlpatterns = [
         name="staff_mark_available",
     ),
 ]
-

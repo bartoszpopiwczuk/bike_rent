@@ -15,7 +15,7 @@ def user_register(request):
         form = UserRegisterForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, f"Account created")
+            messages.success(request, "Account created")
             login(request, form.instance)
             return redirect("all-bikes")
     else:
@@ -49,7 +49,7 @@ def user_login(request):
 @login_required
 def user_logout(request):
     logout(request)
-    messages.info(request, f"You have been succesfully logged out.")
+    messages.info(request, "You have been succesfully logged out.")
     return redirect("all-bikes")
 
 
@@ -72,10 +72,8 @@ def toggle_favorite(request, pk):
 
 @login_required
 def my_favorites(request):
-
     # Search
     favorite_bikes, search_query = searchBicycles(request, subset="user_favorites")
-
 
     # Pagination
     bikes, paginator = paginateBicycles(

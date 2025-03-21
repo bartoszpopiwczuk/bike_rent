@@ -21,9 +21,7 @@ def staff_main(request):
             filter=Q(repair_logs__is_fixed=False),
             # stores the count in the extra field
         )
-    ).order_by(
-        "-unresolved_issues_count"
-    )  # "-" means descending order
+    ).order_by("-unresolved_issues_count")  # "-" means descending order
 
     # Pagination
     bikes, paginator = paginateBicycles(request, objects, objects_per_page=5)
