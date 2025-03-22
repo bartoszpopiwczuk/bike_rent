@@ -11,4 +11,5 @@ urlpatterns = [
     path(
         "bicycle/<str:pk>/", views.getBicycle
     ),  # it's better to pass id as type:str, because id can often contain letters eg. UUID
+    path("bicycle/<str:pk>/add-issue", views.addIssue),
 ]
