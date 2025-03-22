@@ -42,8 +42,10 @@ def addIssue(request, pk):
         bike = Bicycle.objects.get(id=pk)
     except Bicycle.DoesNotExist:
         return Response({"error": "Bike does not exist"}, status=404)  # not found
-    data = request.data.copy()
-    data["bicycle"] = bike.id
+    data = request.data.copy()  # copy the data that is sent, because it's immutable
+    data["bicycle"] = (
+        bike.id
+    )  # adding bike id automatically, so we don't need to pass it in JSON
     serializer = IssueSerializer(data=data, many=False)
     if serializer.is_valid():
         serializer.save()
