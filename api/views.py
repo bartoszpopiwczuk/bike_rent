@@ -20,7 +20,7 @@ def getRoutes(request):
 
 
 @api_view(["GET"])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])  # only authenticated users can access this api view, so you need to be logged to get the token and access this view
 def getBicycles(request):
     bikes = Bicycle.objects.all()
     serializer = BicycleSerializer(bikes, many=True)
