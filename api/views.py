@@ -1,4 +1,5 @@
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from bike_portfolio.models import Bicycle
@@ -19,6 +20,7 @@ def getRoutes(request):
 
 
 @api_view(["GET"])
+@permission_classes([IsAuthenticated])
 def getBicycles(request):
     bikes = Bicycle.objects.all()
     serializer = BicycleSerializer(bikes, many=True)
@@ -26,6 +28,7 @@ def getBicycles(request):
 
 
 @api_view(["GET"])
+@permission_classes([IsAuthenticated])
 def getBicycle(request, pk):
     bike = Bicycle.objects.get(id=pk)
     serializer = BicycleSerializer(bike, many=False)

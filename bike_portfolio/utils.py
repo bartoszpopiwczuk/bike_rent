@@ -12,10 +12,6 @@ def paginateBicycles(request, objects, objects_per_page) -> tuple:
     return bikes, paginator
 
 
-# TODO Make this work universally with different views
-
-
-# ! Now take more than one search word!
 def searchBicycles(request, subset) -> tuple:
     search_query: str = ""
 
@@ -44,7 +40,7 @@ def searchBicycles(request, subset) -> tuple:
                 | Q(wheel_size__iexact=q)
                 | Q(purpose__iexact=q)
             )
-        if type(subset) is tuple:
+        if type(subset) is list:
             objects = objects.filter(purpose=subset[0]).distinct()
         elif subset == "user_favorites":
             objects = objects.filter(query, favorites__user=request.user).distinct()

@@ -1,3 +1,8 @@
+import os
+from pathlib import Path
+
+from dotenv import load_dotenv  # import for environment variables
+
 """
 Django settings for bike_rent project.
 
@@ -10,8 +15,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
-import os
-from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -35,15 +38,13 @@ INSTALLED_APPS = [
     "users.apps.UsersConfig",
     "bike_portfolio.apps.BikePortfolioConfig",
     "staff_panel.apps.StaffPanelConfig",
-
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
-    'rest_framework',
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
@@ -55,6 +56,13 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+# Simple JWT settings
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    )
+}
 
 ROOT_URLCONF = "bike_rent.urls"
 
@@ -139,7 +147,6 @@ LOGIN_REDIRECT_URL = "all-bikes"
 LOGIN_URL = "/users/login/"
 
 # Email settings
-from dotenv import load_dotenv
 
 load_dotenv()
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
