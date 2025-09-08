@@ -7,4 +7,9 @@ urlpatterns = [
     path("bike-detail/<str:pk>", views.bike_detail, name="bike-detail"),
     path("purpose/<str:purpose>", views.bike_purpose, name="bike-purpose"),
     path("send-email", views.send_email, name="send-email"),
+    path(
+        "wab/",
+        views.wab,
+        name="wab",
+    ),
 ]

@@ -74,3 +74,12 @@ def send_email(request):
         )
 
     return redirect(request.POST.get("next", "all-bikes"))
+
+
+def wab(request):
+    osoba1 = {"imie": "Bartosz", "nazwisko": "Popiwczuk", "wiek": 22}
+    osoba2 = {"imie": "Jan", "nazwisko": "Kowalski", "wiek": 42}
+
+    context = {"osoba1": osoba1, "osoba2": osoba2}
+
+    return render(request, "bike_portfolio/wab.html", context)
